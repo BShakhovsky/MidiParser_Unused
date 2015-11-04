@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Compiler">
+      <UniqueIdentifier>{0cc692e8-9cc5-4365-9259-2261e9a63a71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Compiler">
+      <UniqueIdentifier>{9b30a805-1ec5-4c92-9d50-9099cf3d8267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser">
+      <UniqueIdentifier>{191f7775-1023-48e6-a621-ab328102c680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{4c567b50-edce-4aa1-84f9-cfae14dee73d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Event">
+      <UniqueIdentifier>{8a2cff11-f251-4285-9959-4b230239dff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Event\MetaEvent">
+      <UniqueIdentifier>{70f07235-d62d-4013-8253-dc83cb7a9172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{25fc3350-958b-4fba-84aa-a8da3855c4be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event\MetaEvent">
+      <UniqueIdentifier>{9f6169a5-ef42-42a8-8029-43477a12de65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Struct">
+      <UniqueIdentifier>{a5d748eb-b48b-4de4-9dae-54557d199ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Struct">
+      <UniqueIdentifier>{273eb39e-f9ac-40eb-9bfa-80f5353d9303}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiTimeCalculator.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiTracksCollector.h">
+      <Filter>Header Files\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="FileCounter.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="FileParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="IFileParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="IMidiParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiChunksReader.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_EndTrack.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_KeySign.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_KeySign_printer.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_Skip.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_Tempo.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaEvent_Text.h">
+      <Filter>Header Files\Event\MetaEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiParser_Facade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiStruct.h">
+      <Filter>Header Files\Struct</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiTimeCalculator.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiTracksCollector.cpp">
+      <Filter>Source Files\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="FileParser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="IMidiParser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiChunksReader.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiParser.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_EndTrack.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_KeySign.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_KeySign_printer.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_Skip.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_Tempo.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaEvent_Text.cpp">
+      <Filter>Source Files\Event\MetaEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiEvent.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemEvent.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiParser_Facade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiStruct.cpp">
+      <Filter>Source Files\Struct</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
