@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Model::MidiParser::MidiTimeCalculator">
-    <Position X="15.5" Y="4" Width="3.5" />
+  <Class Name="MidiTimeCalculator">
+    <Position X="15" Y="3.5" Width="3.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Typedef Name="Model::MidiParser::MidiTimeCalculator::Times_" Collapsed="true">
+      <Typedef Name="MidiTimeCalculator::Times_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiTimeCalculator.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="Model::MidiParser::MidiTimeCalculator::Notes_" Collapsed="true">
+      <Typedef Name="MidiTimeCalculator::Notes_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiTimeCalculator.h</NewMemberFileName>
         </TypeIdentifier>
@@ -22,18 +22,18 @@
       <FileName>MidiTimeCalculator.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MidiTracksCollector">
+  <Class Name="MidiTracksCollector">
     <Position X="17" Y="0.5" Width="4.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Typedef Name="Model::MidiParser::MidiTracksCollector::HeaderData_" Collapsed="true">
+      <Typedef Name="MidiTracksCollector::HeaderData_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiTracksCollector.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="Model::MidiParser::MidiTracksCollector::Tracks_" Collapsed="true">
+      <Typedef Name="MidiTracksCollector::Tracks_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiTracksCollector.h</NewMemberFileName>
         </TypeIdentifier>
@@ -44,39 +44,25 @@
       <FileName>MidiTracksCollector.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::FileParser">
-    <Position X="11.75" Y="0.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAEBSAAAEgAAAAABQAIAAAAAACAAAAAAAAAAAgIA=</HashCode>
-      <FileName>FileParser.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model::MidiParser::MidiChunksReader">
+  <Class Name="MidiChunksReader">
     <Position X="14.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>4AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAAAEAAAA=</HashCode>
       <FileName>MidiChunksReader.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MidiParser">
-    <Position X="13.25" Y="5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>IAAAACBAAAQAAAAgAAAQAAAAAAAAAAAAgAAAAAEAAAA=</HashCode>
-      <FileName>MidiParser.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model::MidiParser::Event">
+  <Class Name="Event">
     <Position X="0.5" Y="0.5" Width="3.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Typedef Name="Model::MidiParser::Event::FileParser_" Collapsed="true">
+      <Typedef Name="Event::FileParser_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Event.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="Model::MidiParser::Event::EventChunk_" Collapsed="true">
+      <Typedef Name="Event::EventChunk_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Event.h</NewMemberFileName>
         </TypeIdentifier>
@@ -87,34 +73,34 @@
       <FileName>Event.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent">
+  <Class Name="MetaEvent">
     <Position X="4.5" Y="2.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAChCAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MetaEvent.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_EndTrack">
+  <Class Name="MetaEvent_EndTrack">
     <Position X="5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIQAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>MetaEvent_EndTrack.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_KeySign">
+  <Class Name="MetaEvent_KeySign">
     <Position X="5.25" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAAQAAAAEAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>MetaEvent_KeySign.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_KeySign_printer">
+  <Class Name="MetaEvent_KeySign_printer">
     <Position X="7" Y="4" Width="3.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Typedef Name="Model::MidiParser::MetaEvent_KeySign_printer::FileParser_" Collapsed="true">
+      <Typedef Name="MetaEvent_KeySign_printer::FileParser_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MetaEvent_KeySign_printer.h</NewMemberFileName>
         </TypeIdentifier>
@@ -125,121 +111,135 @@
       <FileName>MetaEvent_KeySign_printer.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_Skip">
+  <Class Name="MetaEvent_Skip">
     <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABAAAAAAAAAE=</HashCode>
       <FileName>MetaEvent_Skip.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_Tempo">
+  <Class Name="MetaEvent_Tempo">
     <Position X="1.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAACAAAAAAAA=</HashCode>
       <FileName>MetaEvent_Tempo.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::MetaEvent_Text">
+  <Class Name="MetaEvent_Text">
     <Position X="3.5" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAQAAAAAASAAAAAAAAAAAAA=</HashCode>
       <FileName>MetaEvent_Text.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::IFileParser">
-    <Position X="9" Y="0.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAEBSAEQFAAggIABQAIAAAAAACEAAAAAAQAAAAJA=</HashCode>
-      <FileName>IFileParser.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model::MidiParser::FileCounter">
+  <Class Name="FileCounter">
     <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAABABAAAAAAAAAAABAAAAAAAAgAAAAgAA=</HashCode>
       <FileName>FileCounter.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model::MidiParser::IMidiParser">
-    <Position X="10.5" Y="5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAACAAAAQAAAAgAIAIgAAgAAAEAAACgAAAAAAAAAA=</HashCode>
-      <FileName>IMidiParser.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model::MidiParser::MidiParser_Facade">
+  <Class Name="MidiParser_Facade">
     <Position X="17.75" Y="5.25" Width="3.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Typedef Name="Model::MidiParser::MidiParser_Facade::Times_" Collapsed="true">
+      <Typedef Name="MidiParser_Facade::Times_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiParser_Facade.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="Model::MidiParser::MidiParser_Facade::Notes_" Collapsed="true">
+      <Typedef Name="MidiParser_Facade::Notes_" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MidiParser_Facade.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAgAAACQAAAAgAAAAIAA=</HashCode>
+      <HashCode>AAgAAAAAIAAAAAAAAAAAAAAAAgAAAAQAAAAgAAAAIAA=</HashCode>
       <FileName>MidiParser_Facade.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="Model::MidiParser::MidiStruct::TrackEvent">
-    <Position X="11.25" Y="8.5" Width="1.25" />
+  <Class Name="IFileParser">
+    <Position X="9" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAEQBAAggIAAAAAAAAAAAAEAAAAAAQAAAABA=</HashCode>
+      <FileName>IFileParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IMidiParser">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAIgAAgAAAEAAACAAAAAAAAAAA=</HashCode>
+      <FileName>IMidiParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MidiParser">
+    <Position X="12.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAABAAAAAAAAAAAAQgAAgAAAEAAACAAAAAAEAAAA=</HashCode>
+      <FileName>MidiParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileParser">
+    <Position X="11.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABCAEQBgAggAAAAAAAAAAAAAEAAAAAAAAAAgBA=</HashCode>
+      <FileName>FileParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MidiStruct::TrackEvent">
+    <Position X="11.25" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAEAAAAAAAAAAAAAAAAAAACAAAAgAAAAAIA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::HeaderData">
-    <Position X="5.5" Y="8.5" Width="2.25" />
+  <Struct Name="MidiStruct::HeaderData">
+    <Position X="5.5" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAABAEAAAGAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::ChunkIntro">
-    <Position X="2.5" Y="8.5" Width="1.25" />
+  <Struct Name="MidiStruct::ChunkIntro">
+    <Position X="2.5" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAAAAAAEAAAAAAAAABAAAAAAAAQAAAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::HeaderChunk">
-    <Position X="8" Y="8.5" Width="1.25" />
+  <Struct Name="MidiStruct::HeaderChunk">
+    <Position X="8" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::TrackChunk">
-    <Position X="12.75" Y="8.5" Width="1.25" />
+  <Struct Name="MidiStruct::TrackChunk">
+    <Position X="12.75" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::ChunkType">
-    <Position X="4" Y="8.5" Width="1.25" />
+  <Struct Name="MidiStruct::ChunkType">
+    <Position X="4" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::EventChunk">
-    <Position X="9.75" Y="8.5" Width="1.25" />
+  <Struct Name="MidiStruct::EventChunk">
+    <Position X="9.75" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AQQAAAACAAAAQAAAAAAAAAAAQAAAAAAAAAQAAAAAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Model::MidiParser::MidiStruct::Bytes">
-    <Position X="0.5" Y="8.5" Width="1.5" />
+  <Struct Name="MidiStruct::Bytes">
+    <Position X="0.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>MidiStruct.h</FileName>
