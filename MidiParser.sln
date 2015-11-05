@@ -6,8 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MidiParser", "MidiParser\MidiParser.vcxproj", "{3AA7A3FA-E087-4441-A79A-46E55838495E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gTests", "gTests\gTests.vcxproj", "{F908ADDA-2BCF-4224-9D26-D1340201CBC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AA7A3FA-E087-4441-A79A-46E55838495E} = {3AA7A3FA-E087-4441-A79A-46E55838495E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRun", "TestRun\TestRun.vcxproj", "{ACC4FE77-1C40-43B3-AC5B-69EC8AA83130}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AA7A3FA-E087-4441-A79A-46E55838495E} = {3AA7A3FA-E087-4441-A79A-46E55838495E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

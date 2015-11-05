@@ -1,8 +1,8 @@
 # pragma once
 
-# include "targetver.h"
+# pragma warning(disable:4710 4711)
 
-# pragma warning(disable:4710)
+# include "targetver.h"
 
 # include <memory>
 # include <vector>

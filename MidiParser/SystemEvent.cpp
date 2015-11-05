@@ -3,8 +3,6 @@
 # include "MidiStruct.h"
 # include "IFileParser.h"
 
-using Model::MidiParser::SystemEvent;
-
 # define CHECK(BYTE_VAL, MESSG) if ((BYTE_VAL) != GetInputFile()->PeekByte()) WARNING(MESSG);
 
 void SystemEvent::Read_impl()

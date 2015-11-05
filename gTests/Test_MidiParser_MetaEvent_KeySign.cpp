@@ -61,13 +61,13 @@
 # include "..\MidiParser\MetaEvent_KeySign.h"
 # include "MidiParser_EventCommon.h"
 
-using std::runtime_error;
-using testing::FLAGS_gtest_break_on_failure;
-
 FIXTURE(MetaEvent_KeySign, 59);
 
 TEST_F(Test_MetaEvent_KeySign, Read_impl)
 {
+	using std::runtime_error;
+	using testing::FLAGS_gtest_break_on_failure;
+
 	FLAGS_gtest_break_on_failure = false;
 	EXPECT_NONFATAL_FAILURE(CHECK_WHAT, "Wrong key signature chunk length, 0 bytes skipped");
 	EXPECT_NONFATAL_FAILURE(CHECK_WHAT, "Wrong key signature chunk length, 1 bytes skipped");

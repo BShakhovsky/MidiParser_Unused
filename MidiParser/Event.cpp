@@ -4,7 +4,6 @@
 # include "IFileParser.h"
 
 using namespace std;
-using namespace Model::MidiParser;
 using MidiStruct::EventChunk;
 
 Event::FileParser_ Event::fileParser_ = nullptr;

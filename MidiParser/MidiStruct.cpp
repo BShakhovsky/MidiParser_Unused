@@ -3,7 +3,7 @@
 
 using namespace std;
 using namespace chrono;
-using namespace Model::MidiParser::MidiStruct;
+using namespace MidiStruct;
 
 const int
 Bytes::varLengthSize = sizeof(DWORD),

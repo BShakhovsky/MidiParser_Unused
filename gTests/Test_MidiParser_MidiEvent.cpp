@@ -45,9 +45,6 @@
 # include "..\\MidiParser\MidiStruct.h"
 # include "MidiParser_EventCommon.h"
 
-using std::runtime_error;
-using Model::MidiParser::Event;
-
 FIXTURE(MidiEvent, 47);
 
 # define CHECK_RESULT(STATUS, NOTE, VELOC, MESSG) {	result_ = CHECK_WHAT;								\
@@ -56,6 +53,8 @@ FIXTURE(MidiEvent, 47);
 													ASSERT_EQ((VELOC),	result_->velocity)	<< (MESSG);	}
 TEST_F(Test_MidiEvent, Read_impl)
 {
+	using std::runtime_error;
+
 	ASSERT_NO_FATAL_FAILURE(Event::GetInstance(file_))	<< "3rd line (F0) = system event";
 	ASSERT_NO_FATAL_FAILURE(Event::GetInstance(file_))	<< "4th line (F5) = system event";
 	ASSERT_NO_FATAL_FAILURE(file_->SkipData(1))			<< "5th line (FF) = meta event";

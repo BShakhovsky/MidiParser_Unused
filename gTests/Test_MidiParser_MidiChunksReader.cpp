@@ -5,9 +5,7 @@
 # include "CurrentFileName.h"
 
 using namespace std;
-using boost::lexical_cast;
 using namespace testing;
-using namespace Model::MidiParser;
 using namespace MidiStruct;
 using gTest::MidiParser_Mock;
 
@@ -23,6 +21,8 @@ public:
 
 	virtual void SetUp() override final
 	{
+		using boost::lexical_cast;
+
 		FLAGS_gtest_break_on_failure = true;
 		ASSERT_THROW(MidiChunksReader(CURRENT_FILE_NAME).ReadHeaderChunk(), runtime_error) << "CORRUPTED MIDI FILE HEADER";
 		FLAGS_gtest_break_on_failure = false;
@@ -31,7 +31,8 @@ public:
 			const char ch[5] = "dulc";
 			uint32_t num;
 		} length;
-		EXPECT_NONFATAL_FAILURE(MidiChunksReader(CURRENT_FILE_NAME).ReadTrackChunk(), "Corrupted MIDI Track Header, " + lexical_cast<string>(length.num) + " bytes skipped");
+		EXPECT_NONFATAL_FAILURE(MidiChunksReader(CURRENT_FILE_NAME).ReadTrackChunk(), "Corrupted MIDI Track Header, "
+			+ lexical_cast<string>(length.num) + " bytes skipped");
 		FLAGS_gtest_break_on_failure = true;
 	}
 	virtual void TearDown() override final {}
@@ -73,7 +74,7 @@ TEST_F(Test_MidiChunksReader, ReadHeaderChunk)
 
 	HeaderChunk result = { NULL, NULL, NULL };
 	ASSERT_NO_FATAL_FAILURE(result = midi_.ReadHeaderChunk());
-	ASSERT_EQ(MidiStruct::ChunkIntro::HEADER, result.intro.type);
+	ASSERT_EQ(ChunkIntro::HEADER, result.intro.type);
 	ASSERT_EQ(6, result.intro.length);
 
 	ASSERT_EQ(2, result.data.format);
@@ -89,7 +90,7 @@ TEST_F(Test_MidiChunksReader, ReadTrackChunk)
 
 	TrackChunk result = {};
 	ASSERT_NO_FATAL_FAILURE(result = midi_.ReadTrackChunk());
-	ASSERT_EQ(MidiStruct::ChunkIntro::TRACK, result.intro.type);
+	ASSERT_EQ(ChunkIntro::TRACK, result.intro.type);
 	ASSERT_EQ(NULL, result.intro.length);
 	ASSERT_EQ(NULL, result.trackEvent.size());
 

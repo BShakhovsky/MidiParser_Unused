@@ -4,7 +4,6 @@
 int main()
 {
 	using std::clock; 
-	using Model::MidiParser::MidiParser_Facade;
 
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
@@ -21,7 +20,7 @@ int main()
 			static_cast<unsigned>(midi.GetNotes().size()));
 		for (auto jiter(iter->cbegin()); jiter != iter->cend(); ++jiter)
 		{
-			printf("Time %u Note %d\t", midi.GetTimes()
+			printf("Time %u Note %d\t", midi.GetMilliSeconds()
 				.at(static_cast<size_t>(iter - midi.GetNotes().cbegin()))
 				.at(static_cast<size_t>(jiter - iter->cbegin())),
 				*jiter);

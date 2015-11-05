@@ -1,5 +1,7 @@
 # pragma once
 
+# pragma warning(disable:4710 4711)
+
 # include "targetver.h"
 
 # include <cassert>
@@ -24,8 +26,8 @@
 #	define WARNING(MESSG) { std::cout << "\nWARNING: "	<< MESSG << std::endl;	system("Pause"); }
 # endif
 
-# pragma warning(disable:4625 4626)		// boost::noncopyable
-# pragma warning(disable:4514 4710)	// inline functions
+# pragma warning(disable:4514)
+# pragma warning(disable:4625 4626)	// boost::noncopyable
 
 # ifdef _DEBUG
 #	define BORIS_ASSERT(BORIS_MSG) { std::cerr << "Assertion failed: " << BORIS_MSG << std::endl; assert(false); }
@@ -34,4 +36,3 @@
 # else
 #	"WRONG SOLUTION CONFIGURATION";
 # endif
-# define PURE_VIRTUAL BORIS_ASSERT("PURE VIRTUAL FUNCTION " __FUNCTION__ " MUST NEVER BE CALLED");

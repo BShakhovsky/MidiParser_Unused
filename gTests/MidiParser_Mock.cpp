@@ -2,13 +2,11 @@
 # include "MidiParser_Mock.h"
 # include "..\MidiParser\MidiStruct.h"
 
-using namespace std;
-using namespace Model::MidiParser::MidiStruct;
+using std::vector;
+using namespace MidiStruct;
 using gTest::MidiParser_Mock;
 
-
 int MidiParser_Mock::counter_ = -1;
-
 
 const ChunkIntro SetChunkIntro(const char c0, const char c1, const char c2, const char c3)
 {
@@ -26,8 +24,7 @@ const ChunkIntro SetChunkIntro(const char c0, const char c1, const char c2, cons
 
 # define RAND_MIN(TYPE, MIN_VAL) static_cast<TYPE>(rand() % (TYPE ## _MAX - (MIN_VAL)) + (MIN_VAL))
 
-
-const ChunkIntro MidiParser_Mock::ReadChunkIntro_impl() const
+const ChunkIntro MidiParser_Mock::ReadChunkIntro() const
 {
 	auto result(SetChunkIntro('W', 'r', 'n', 'g'));
 
@@ -49,7 +46,7 @@ const ChunkIntro MidiParser_Mock::ReadChunkIntro_impl() const
 	return result;
 }
 
-const HeaderData MidiParser_Mock::ReadHeaderData_impl() const
+const HeaderData MidiParser_Mock::ReadHeaderData() const
 {
 	HeaderData result = { NULL, NULL, NULL };
 
@@ -70,8 +67,7 @@ const HeaderData MidiParser_Mock::ReadHeaderData_impl() const
 	return result;
 }
 
-
-vector<TrackEvent> MidiParser_Mock::ReadTrackEvents_impl(const uint32_t) const
+vector<TrackEvent> MidiParser_Mock::ReadTrackEvents(const uint32_t) const
 {
 	return vector<TrackEvent>();
 }

@@ -5,8 +5,6 @@
 # include "MidiParser_FileParser_Mock.h"
 
 using std::make_shared;
-using testing::FLAGS_gtest_break_on_failure;
-using Model::MidiParser::Event;
 using gTest::TestFixture_Event;
 
 TestFixture_Event::TestFixture_Event(const char* fileName, const int bytesRemained) : Test(),
@@ -19,6 +17,8 @@ TestFixture_Event::~TestFixture_Event() {}
 
 void TestFixture_Event::SetUp()
 {
+	using testing::FLAGS_gtest_break_on_failure;
+
 	FLAGS_gtest_break_on_failure = true;
 
 # ifdef _DEBUG

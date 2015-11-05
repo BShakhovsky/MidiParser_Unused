@@ -23,7 +23,7 @@
 		}																							\
 	};
 
-# define CHECK_WHAT Model::MidiParser::Event::GetInstance(file_)->Read()
+# define CHECK_WHAT Event::GetInstance(file_)->Read()
 
-# define CHECK_TYPE(META_TYPE, EVENT_TYPE) ASSERT_EQ(typeid(Model::MidiParser::EVENT_TYPE),	\
-	typeid(*Model::MidiParser::Event::GetInstance(file_))) << "meta type = " << (META_TYPE)	;
+# define CHECK_TYPE(META_TYPE, EVENT_TYPE) ASSERT_EQ(typeid(EVENT_TYPE),	\
+	typeid(*Event::GetInstance(file_))) << "meta type = " << (META_TYPE)	;

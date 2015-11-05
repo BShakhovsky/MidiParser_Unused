@@ -18,12 +18,11 @@
 /********************************************
 -6	FA	Real-time event
 			-1	ReadVarLenFormat
-			6	one + six = 7 lines to skip:
+			5	one + five = 6 lines to skip:
 ********************************************/
 
 using std::length_error;
 using testing::FLAGS_gtest_break_on_failure;
-using Model::MidiParser::Event;
 
 /*************************************************
 -7	F9	WRONG STATUS BYTE
@@ -36,7 +35,7 @@ using Model::MidiParser::Event;
 			0	Two + 1 + 2 + 0 = 5 lines to skip:
 *************************************************/
 
-FIXTURE(SystemEvent, 104);
+FIXTURE(SystemEvent, 103);
 
 /***********************************************
 -10	F6	Common event

@@ -3,7 +3,6 @@
 # include "IFileParser.h"
 
 using namespace std;
-using Model::MidiParser::MetaEvent_KeySign_printer;
 
 MetaEvent_KeySign_printer::MetaEvent_KeySign_printer() :
 	inputFile_(nullptr),

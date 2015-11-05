@@ -48,8 +48,6 @@
 # include "..\MidiParser\MidiStruct.h"
 # include "MidiParser_EventCommon.h"
 
-using testing::FLAGS_gtest_break_on_failure;
-
 FIXTURE(MetaEvent_Tempo, 44);
 
 # ifdef _DEBUG
@@ -63,6 +61,8 @@ FIXTURE(MetaEvent_Tempo, 44);
 																	ASSERT_EQ((DATA), result_->metaData);	}
 TEST_F(Test_MetaEvent_Tempo, Read_impl)
 {
+	using testing::FLAGS_gtest_break_on_failure;
+
 	FLAGS_gtest_break_on_failure = false;
 	CHECK_DEATH("WRONG TEMPO: DIVISION BY ZERO", 3);
 	

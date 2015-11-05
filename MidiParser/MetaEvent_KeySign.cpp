@@ -4,7 +4,6 @@
 # include "IFileParser.h"
 
 using std::make_unique;
-using namespace Model::MidiParser;
 
 MetaEvent_KeySign::MetaEvent_KeySign(const char statusByte, const char metaType) :
 	MetaEvent(statusByte, metaType),

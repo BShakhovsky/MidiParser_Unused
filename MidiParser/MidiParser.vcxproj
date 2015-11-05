@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="FileParser.cpp" />
-    <ClCompile Include="IMidiParser.cpp" />
     <ClCompile Include="MetaEvent.cpp" />
     <ClCompile Include="MetaEvent_EndTrack.cpp" />
     <ClCompile Include="MetaEvent_KeySign.cpp" />

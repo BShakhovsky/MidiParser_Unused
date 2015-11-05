@@ -1,87 +1,22 @@
 # pragma once
-namespace Model
+
+class IFileParser abstract : private boost::noncopyable
 {
-	namespace MidiParser
-	{
-		class IFileParser abstract : private boost::noncopyable
-		{
-		public:
-			int GetBytesRemained() const
-			{
-				return GetBytesRemained_impl();
-			}
-			void SetBytesRemained(int value) const
-			{
-				SetBytesRemained_impl(value);
-			}
+public:
+	virtual int GetBytesRemained() const = 0;
+	virtual void SetBytesRemained(int value) const = 0;
 
-			int PeekByte()
-			{
-				return PeekByte_impl();
-			}
-			char ReadByte()
-			{
-				return ReadByte_impl();
-			}
-			void ReadData(char* data, std::streamsize count)
-			{
-				ReadData_impl(data, count);
-			}
-			void SkipData(std::streamoff offset)
-			{
-				SkipData_impl(offset);
-			}
+	virtual int PeekByte() = 0;
+	virtual char ReadByte() = 0;
+	virtual void ReadData(char* data, std::streamsize count) = 0;
+	virtual void SkipData(std::streamoff offset) = 0;
 
-			unsigned ReadInverse(unsigned nBytes, bool toCheck = true)
-			{
-				return ReadInverse_impl(nBytes, toCheck);
-			}
-			unsigned ReadVarLenFormat()
-			{
-				return ReadVarLenFormat_impl();
-			}
+	virtual unsigned ReadInverse(unsigned nBytes, bool toCheck = true) = 0;
+	virtual unsigned ReadVarLenFormat() = 0;
 
-			void CloseFile()
-			{
-				CloseFile_impl();
-			}
-			virtual ~IFileParser() = 0 {}
-		protected:
-			IFileParser() = default;
-		private:
-			virtual void CloseFile_impl() = 0
-			{
-				PURE_VIRTUAL;
-			}
+	virtual void CloseFile() = 0;
 
-			virtual int GetBytesRemained_impl() const = 0
-			{
-				PURE_VIRTUAL;
-			}
-			virtual void SetBytesRemained_impl(int) const = 0
-			{
-				PURE_VIRTUAL;
-			}
-
-			virtual int PeekByte_impl() = 0
-			{
-				PURE_VIRTUAL;
-			}
-			virtual char ReadByte_impl() = 0
-			{
-				PURE_VIRTUAL;
-			}
-			virtual void ReadData_impl(char*, std::streamsize) = 0
-			{
-				PURE_VIRTUAL;
-			}
-			virtual void SkipData_impl(std::streamoff) = 0
-			{
-				PURE_VIRTUAL;
-			}
-
-			virtual unsigned ReadInverse_impl(unsigned, bool) = 0;
-			virtual unsigned ReadVarLenFormat_impl() = 0;
-		};
-	}
-}
+	virtual ~IFileParser() = 0 {}
+protected:
+	IFileParser() = default;
+};

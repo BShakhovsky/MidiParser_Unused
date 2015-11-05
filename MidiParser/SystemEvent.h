@@ -1,4 +1,4 @@
 # pragma once
 # include "Event.h"
 
-EVENT_DECL(System); }; } }
+EVENT_DECL(System); };

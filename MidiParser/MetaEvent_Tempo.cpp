@@ -3,9 +3,6 @@
 # include "IFileParser.h"
 # include "MidiStruct.h"
 
-using std::cout;
-using namespace Model::MidiParser;
-
 void MetaEvent_Tempo::Read_impl()
 {
 	if (3 != GetInputFile()->PeekByte()) WARNING("Wrong tempo chunk length");

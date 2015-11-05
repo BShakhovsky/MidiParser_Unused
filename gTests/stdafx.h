@@ -2,7 +2,7 @@
 
 # include "targetver.h"
 
-# pragma warning(disable:4710)
+# pragma warning(disable:4710 4711)
 
 # include <cassert>
 # include <fstream>
@@ -28,4 +28,3 @@
 # else
 #	"WRONG SOLUTION CONFIGURATION";
 # endif
-# define PURE_VIRTUAL BORIS_ASSERT("PURE VIRTUAL FUNCTION " __FUNCTION__ " MUST NEVER BE CALLED");

@@ -3,13 +3,12 @@
 # include "MidiStruct.h"
 # include "IFileParser.h"
 
-using namespace std;
-using Model::MidiParser::MidiEvent;
-
 char MidiEvent::runStatus_ = '\0';
 
 void MidiEvent::CheckRunStatus() const
 {
+	using std::runtime_error;
+
 	if (GetChunk()->status < 0)				// most significant byte is set ==> it is status byte, Ok
 	{
 		runStatus_ = GetChunk()->status;	// save running status

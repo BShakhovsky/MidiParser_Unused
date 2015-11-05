@@ -32,8 +32,6 @@
 # include "..\MidiParser\MetaEvent_EndTrack.h"
 # include "MidiParser_EventCommon.h"
 
-using testing::FLAGS_gtest_break_on_failure;
-
 FIXTURE(MetaEvent_EndTrack, 4);
 
 # define CHECK_OK(MESSG){file_->SetBytesRemained(3);ASSERT_NO_FATAL_FAILURE(CHECK_WHAT)			<< (MESSG);			}
@@ -41,6 +39,8 @@ FIXTURE(MetaEvent_EndTrack, 4);
 
 TEST_F(Test_MetaEvent_EndTrack, Read_impl)
 {
+	using testing::FLAGS_gtest_break_on_failure;
+
 # ifdef _DEBUG
 	auto assertMsg("SOMETHING IS WRONG IN PROGRAM ARITHMETICS");
 	ASSERT_DEBUG_DEATH(CHECK_WHAT, assertMsg) << "bytes remained = 0";

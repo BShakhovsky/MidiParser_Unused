@@ -5,12 +5,10 @@
 
 using namespace std;
 using namespace testing;
-using namespace Model::MidiParser;
-using MidiStruct::Bytes;
 
-# define TRY_CATCH(VAR_NAME, FUNC_NAME, EXCEPT_FUNC_NAME, OFFSET)							\
-	try { (VAR_NAME) . FUNC_NAME (OFFSET); }	catch (const runtime_error& e)				\
-	{ ASSERT_STREQ("Model::MidiParser::FileParser::" #EXCEPT_FUNC_NAME "_impl", e.what());	}
+# define TRY_CATCH(VAR_NAME, FUNC_NAME, EXCEPT_FUNC_NAME, OFFSET)				\
+	try { (VAR_NAME) . FUNC_NAME (OFFSET); }	catch (const runtime_error& e)	\
+	{ ASSERT_STREQ("FileParser::" #EXCEPT_FUNC_NAME, e.what());					}
 # define NOTHING
 class Test_FileParser : public Test
 {
@@ -87,15 +85,15 @@ TEST_F(Test_FileParser, SkipData)
 TEST_F(Test_FileParser, ReadInverse)
 {
 # ifdef _DEBUG
-	ASSERT_DEBUG_DEATH(file.ReadInverse(sizeof int32_t), assertMsg);
+	ASSERT_DEBUG_DEATH(file.ReadInverse(sizeof int32_t, true), assertMsg);
 # endif
 	file.SetBytesRemained(1);
 # ifdef _DEBUG
-	ASSERT_DEBUG_DEATH(file.ReadInverse(sizeof int32_t), assertMsg);
+	ASSERT_DEBUG_DEATH(file.ReadInverse(sizeof int32_t, true), assertMsg);
 # endif
 	ASSERT_NO_FATAL_FAILURE(file.ReadInverse(sizeof int32_t, false));
 	file.SetBytesRemained(sizeof int32_t);
-	ASSERT_NO_FATAL_FAILURE(file.ReadInverse(sizeof int32_t));
+	ASSERT_NO_FATAL_FAILURE(file.ReadInverse(sizeof int32_t, true));
 
 	file.SkipData(NULL - static_cast<signed>(sizeof int32_t) * 2);
 
@@ -104,7 +102,7 @@ TEST_F(Test_FileParser, ReadInverse)
 	const auto result = file.ReadInverse(sizeof(int32_t), false);
 # elif defined NDEBUG
 	srand(static_cast<unsigned>(time(NULL)));
-	const auto result = file.ReadInverse(sizeof(int32_t) + rand());
+	const auto result(file.ReadInverse(sizeof(int32_t) + rand(), true));
 # else
 		"WRONG SOLUTION CONFIGURATION";
 # endif
@@ -146,7 +144,7 @@ TEST_F(Test_FileParser, ReadInverse)
 	ASSERT_EQ(sizeof int32_t, file.GetBytesRemained());
 	ASSERT_EQ('c', file.PeekByte());
 
-	ASSERT_EQ(three.num, file.ReadInverse(3))		<< "result = " << 6'515'829;
+	ASSERT_EQ(three.num, file.ReadInverse(3, true))	<< "result = " << 6'515'829;
 	ASSERT_EQ(sizeof int32_t - 3, file.GetBytesRemained());
 	ASSERT_EQ('d', file.PeekByte());
 
@@ -165,6 +163,8 @@ TEST_F(Test_FileParser, ReadInverse)
 
 TEST_F(Test_FileParser, ReadVarLenFormat)
 {
+	using MidiStruct::Bytes;
+
 # ifdef _DEBUG
 	ASSERT_DEBUG_DEATH(file.ReadVarLenFormat(), assertMsg);
 # endif

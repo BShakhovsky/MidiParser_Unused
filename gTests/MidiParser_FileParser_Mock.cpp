@@ -4,27 +4,19 @@
 # include "..\MidiParser\MidiStruct.h"
 
 using namespace std;
-using namespace Model::MidiParser;
-using MidiStruct::Bytes;
 using gTest::FileParser_Mock;
 
 FileParser_Mock::FileParser_Mock(const char* fileName) :
 	IFileParser(),
-	inputFile_(fileName, std::ifstream::in),
+	inputFile_(fileName, ifstream::in),
 	bytesRemained_(make_shared<FileCounter>())
 {}
-FileParser_Mock::~FileParser_Mock() {}
 
-void FileParser_Mock::CloseFile_impl()
-{
-	BORIS_ASSERT("VIRTUAL " __FUNCTION__ " HAS NOT BEEN OVERRIDEN");
-}
-
-int FileParser_Mock::GetBytesRemained_impl() const
+int FileParser_Mock::GetBytesRemained() const
 {
 	return bytesRemained_->Get();
 }
-void FileParser_Mock::SetBytesRemained_impl(const int value) const
+void FileParser_Mock::SetBytesRemained(const int value) const
 {
 	bytesRemained_->Set(value);
 }
@@ -42,19 +34,19 @@ int FileParser_Mock::ReadNumber()
 	return result;
 }
 
-int FileParser_Mock::PeekByte_impl()
+int FileParser_Mock::PeekByte()
 {
 	const auto pos(inputFile_.tellg());
 	const auto result(ReadNumber());
 	inputFile_.seekg(pos);
 	return result;
 }
-char FileParser_Mock::ReadByte_impl()
+char FileParser_Mock::ReadByte()
 {
 	bytesRemained_->Reduce(1);
 	return static_cast<char>(ReadNumber());
 }
-void FileParser_Mock::ReadData_impl(char* data, std::streamsize count)
+void FileParser_Mock::ReadData(char* data, std::streamsize count)
 {
 	bytesRemained_->Reduce(static_cast<int>(count), false);
 	for (; count--; ++data)
@@ -64,13 +56,13 @@ void FileParser_Mock::ReadData_impl(char* data, std::streamsize count)
 		*data = result ? result : ' ';
 	}
 }
-void FileParser_Mock::SkipData_impl(std::streamoff offset)
+void FileParser_Mock::SkipData(std::streamoff offset)
 {
 	assert("CURRENT MOCK OBJECT CAN HANDLE ONLY FORWARD MOVES" && offset >= 0);
 	for (auto i(NULL); i < offset; ++i) ReadByte();
 }
 
-unsigned FileParser_Mock::ReadInverse_impl(unsigned nBytes, const bool toCheck)
+unsigned FileParser_Mock::ReadInverse(unsigned nBytes, const bool toCheck)
 {
 	if (nBytes > sizeof(int32_t))
 	{
@@ -82,24 +74,15 @@ unsigned FileParser_Mock::ReadInverse_impl(unsigned nBytes, const bool toCheck)
 	bytesRemained_->Reduce(static_cast<signed>(nBytes), toCheck);
 	return result;
 }
-unsigned FileParser_Mock::ReadVarLenFormat_impl()
+unsigned FileParser_Mock::ReadVarLenFormat()
 {
+	using MidiStruct::Bytes;
+
 	auto result(NULL),
 		totalBytes(NULL);
 	auto anotherByte('\0');
 
-	for (; (anotherByte = ReadByte_impl()) < 0; result -= anotherByte)	// ends with the positive byte
+	for (; (anotherByte = ReadByte()) < 0; result -= anotherByte)	// ends with the positive byte
 		if (++totalBytes >= Bytes::varLengthSize) throw length_error("UNEXPECTED VARIABLE LENGTH > FOUR BYTES");
 	return static_cast<unsigned>(result + anotherByte);
-}
-
-uint32_t gTest::ReadWord(std::shared_ptr<FileParser_Mock>)	// Word = 4 bytes!!!
-{
-	BORIS_ASSERT("TEMPLATE " __FUNCTION__ " HAS NOT BEEN SPECIALIZED");
-	return NULL;
-}
-uint16_t gTest::ReadDWord(std::shared_ptr<FileParser_Mock>)	// DWord = 2 bytes!!!
-{
-	BORIS_ASSERT("TEMPLATE " __FUNCTION__ " HAS NOT BEEN SPECIALIZED");
-	return NULL;
 }

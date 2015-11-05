@@ -125,9 +125,6 @@
     <ClCompile Include="FileParser.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="IMidiParser.cpp">
-      <Filter>Source Files\Parser</Filter>
-    </ClCompile>
     <ClCompile Include="MidiChunksReader.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>

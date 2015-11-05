@@ -5,8 +5,7 @@
 # include "MidiStruct.h"
 
 using namespace std;
-using namespace Model::MidiParser;
-using namespace MidiStruct;
+using MidiStruct::TrackEvent;
 
 MidiTimeCalculator::MidiTimeCalculator() :
 	tempoDivision_(NULL),

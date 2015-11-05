@@ -5,7 +5,6 @@
 # include "MidiStruct.h"
 
 using namespace std;
-using namespace Model::MidiParser;
 using namespace MidiStruct;
 
 # pragma warning(push)

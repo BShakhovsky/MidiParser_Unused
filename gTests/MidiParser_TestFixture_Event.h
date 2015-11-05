@@ -1,17 +1,11 @@
 # pragma once
 # include <gtest\gtest.h>
 
-namespace Model
-{
-	namespace MidiParser
-	{
-		class IFileParser;
+class IFileParser;
 
-		namespace MidiStruct
-		{
-			struct EventChunk;
-		}
-	}
+namespace MidiStruct
+{
+	struct EventChunk;
 }
 
 namespace gTest
@@ -22,10 +16,10 @@ namespace gTest
 # ifdef _DEBUG
 		const char* assertStatus_ = "WRONG STATUS BYTE";
 # endif
-		std::shared_ptr<Model::MidiParser::IFileParser> file_;
+		std::shared_ptr<IFileParser> file_;
 		int bytesRemained_;
 
-		std::shared_ptr<Model::MidiParser::MidiStruct::EventChunk> result_;
+		std::shared_ptr<MidiStruct::EventChunk> result_;
 	public:
 		virtual ~TestFixture_Event() override;
 

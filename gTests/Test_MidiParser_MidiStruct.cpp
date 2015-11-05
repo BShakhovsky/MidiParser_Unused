@@ -1,7 +1,7 @@
 # include "stdafx.h"
 # include "..\MidiParser\MidiStruct.h"
 
-using Model::MidiParser::MidiStruct::ChunkType;
+using MidiStruct::ChunkType;
 
 TEST(MidiStructure, BoolOperators)
 {

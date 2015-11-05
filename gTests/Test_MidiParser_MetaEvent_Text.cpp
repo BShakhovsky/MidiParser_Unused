@@ -67,12 +67,12 @@
 # include "..\MidiParser\MetaEvent_Text.h"
 # include "MidiParser_EventCommon.h"
 
-using namespace testing;
-
 FIXTURE(MetaEvent_Text, 86);
 
 TEST_F(Test_MetaEvent_Text, Read_impl)
 {
+	using testing::FLAGS_gtest_break_on_failure;
+
 	FLAGS_gtest_break_on_failure = false;
 	EXPECT_NONFATAL_FAILURE(CHECK_WHAT, "Wrong sequence chunk length");
 	EXPECT_NONFATAL_FAILURE(CHECK_WHAT, "Wrong sequence chunk length");

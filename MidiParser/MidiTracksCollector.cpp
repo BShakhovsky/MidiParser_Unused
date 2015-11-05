@@ -4,8 +4,6 @@
 # include "MidiStruct.h"
 
 using namespace std;
-using namespace Model::MidiParser;
-using namespace MidiStruct;
 
 MidiTracksCollector::MidiTracksCollector(const char* fileName) :
 	midiFile_(make_unique<MidiChunksReader>(fileName)),
@@ -17,6 +15,8 @@ MidiTracksCollector::~MidiTracksCollector() {}
 
 void MidiTracksCollector::ReadMidiFile()
 {
+	using MidiStruct::HeaderData;
+
 	if (!tracks_.empty()) { BORIS_ASSERT(__FUNCTION__ " MUST NOT BE CALLED TWICE"); }
 	else
 	headerData_ = make_shared<HeaderData>(midiFile_->ReadHeaderChunk().data);

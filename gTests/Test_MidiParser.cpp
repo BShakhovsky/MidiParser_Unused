@@ -6,7 +6,6 @@
 
 using std::runtime_error;
 using namespace testing;
-using namespace Model::MidiParser;
 
 class Test_MidiParser : public Test
 {

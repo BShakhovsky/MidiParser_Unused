@@ -2,11 +2,10 @@
 # include "MidiParser_Facade.h"
 # include "MidiTimeCalculator.h"
 
-using namespace std;
-using namespace Model::MidiParser;
-
 MidiParser_Facade::MidiParser_Facade(const char* fileName)
 {
+	using namespace std;
+
 	MidiTimeCalculator midiFile;
 	midiFile.LoadMidiData(fileName);
 	midiFile.CalcDeltaTimes();

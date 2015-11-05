@@ -4,7 +4,6 @@
 # include "IFileParser.h"
 
 using namespace std;
-using Model::MidiParser::MetaEvent;
 
 MetaEvent::MetaEvent(const char statusByte, const char metaType) :
 	Event(statusByte)

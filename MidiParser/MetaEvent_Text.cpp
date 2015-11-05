@@ -3,9 +3,6 @@
 # include "IFileParser.h"
 # include "MidiStruct.h"
 
-using namespace std;
-using Model::MidiParser::MetaEvent_Text;
-
 # pragma warning(push)
 #	ifdef _DEBUG
 #		pragma warning(disable:4702)	// unreachable code (but may become reachable by mistake ==> test it)
@@ -30,6 +27,8 @@ void MetaEvent_Text::Read_impl()
 
 void MetaEvent_Text::ReadText(const char* eventMsg) const
 {
+	using namespace std;
+
 	const auto length = GetInputFile()->ReadVarLenFormat();		// may throw std::length_error
 	if (length > 0xFF) WARNING("Max 256 byts and ISO-8859-1 character set allowed");
 	vector<char> result(length + 1);							// + zero-byte in the end

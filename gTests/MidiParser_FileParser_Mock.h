@@ -1,40 +1,37 @@
 # pragma once
 # include "..\MidiParser\IFileParser.h"
-namespace Model
-{
-	namespace MidiParser
-	{
-		class FileCounter;
-	}
-}
+
+class FileCounter;
+
 namespace gTest
 {
-	class FileParser_Mock : public Model::MidiParser::IFileParser
+	class FileParser_Mock : public IFileParser
 	{
 		const int32_t UNUSED = NULL;	// four padding bytes
 		std::ifstream inputFile_;
-		std::shared_ptr<Model::MidiParser::FileCounter> bytesRemained_;
+		std::shared_ptr<FileCounter> bytesRemained_;
+
+		FileParser_Mock() = delete;
 	public:
 		explicit FileParser_Mock(const char* fileName);
-		virtual ~FileParser_Mock() override final;
+		virtual ~FileParser_Mock() override final = default;
+
+		virtual void CloseFile() override final
+		{
+			BORIS_ASSERT(__FUNCTION__ "HAS NOT BEEN OVERRIDEN");
+		}
+		virtual int GetBytesRemained() const override final;
+		virtual void SetBytesRemained(int value) const override final;
+
+		virtual int PeekByte() override final;
+		virtual char ReadByte() override final;
+		virtual void ReadData(char* data, std::streamsize count) override final;
+		virtual void SkipData(std::streamoff offset) override final;
+
+		virtual unsigned ReadInverse(unsigned nBytes, bool toCheck) override final;
+		virtual unsigned ReadVarLenFormat() override final;
 	private:
-		FileParser_Mock() = delete;
-
-		virtual void CloseFile_impl() override final;
-
-		virtual int GetBytesRemained_impl() const override final;
-		virtual void SetBytesRemained_impl(int value) const override final;
-
 		std::unique_ptr<std::string> ReadLine();
 		int ReadNumber();
-		virtual int PeekByte_impl() override final;
-		virtual char ReadByte_impl() override final;
-		virtual void ReadData_impl(char* data, std::streamsize count) override final;
-		virtual void SkipData_impl(std::streamoff offset) override final;
-
-		virtual unsigned ReadInverse_impl(unsigned nBytes, bool toCheck) override final;
-		virtual unsigned ReadVarLenFormat_impl() override final;
 	};
-	uint32_t ReadWord(std::shared_ptr<FileParser_Mock>);	// Word = 4 bytes!!!
-	uint16_t ReadDWord(std::shared_ptr<FileParser_Mock>);	// DWord = 2 bytes!!!
 }
