@@ -3,12 +3,11 @@
 # include "..\MidiParser\FileParser.h"
 # include "..\MidiParser\MidiStruct.h"
 
-using namespace std;
 using namespace testing;
 
-# define TRY_CATCH(VAR_NAME, FUNC_NAME, EXCEPT_FUNC_NAME, OFFSET)				\
-	try { (VAR_NAME) . FUNC_NAME (OFFSET); }	catch (const runtime_error& e)	\
-	{ ASSERT_STREQ("FileParser::" #EXCEPT_FUNC_NAME, e.what());					}
+# define TRY_CATCH(VAR_NAME, FUNC_NAME, EXCEPT_FUNC_NAME, OFFSET)			\
+	try { (VAR_NAME) . FUNC_NAME (OFFSET); }	catch (const MidiError& e)	\
+	{ ASSERT_STREQ("FileParser::" #EXCEPT_FUNC_NAME, e.what());				}
 # define NOTHING
 class Test_FileParser : public Test
 {
@@ -27,7 +26,7 @@ public:
 	}
 	virtual void TearDown() override final {}
 
-	void Try_Catch(streamoff offset)
+	void Try_Catch(std::streamoff offset)
 	{
 		TRY_CATCH(file, SkipData, SkipData, offset);
 		TRY_CATCH(file, PeekByte, PeekByte, NOTHING);
@@ -198,7 +197,7 @@ TEST_F(Test_FileParser, ReadVarLenFormat)
 	ASSERT_EQ(0x56, header.PeekByte());		// https://hexed.it/
 	header.SkipData(167);
 	ASSERT_EQ(NULL, header.ReadVarLenFormat());
-	ASSERT_THROW(header.ReadVarLenFormat(), length_error) << "UNEXPECTED VARIABLE LENGTH > FOUR BYTES";
+	ASSERT_THROW(header.ReadVarLenFormat(), MidiError) << "UNEXPECTED VARIABLE LENGTH > FOUR BYTES";
 
 	header.SkipData(-4);
 	/********************************************

@@ -17,6 +17,7 @@ class MidiTracksCollector : private boost::noncopyable
 	MidiTracksCollector() = delete;
 public:
 	explicit MidiTracksCollector(const char* fileName);
+	explicit MidiTracksCollector(const wchar_t* fileName);
 	~MidiTracksCollector();
 
 	HeaderData_ GetHeaderData() const

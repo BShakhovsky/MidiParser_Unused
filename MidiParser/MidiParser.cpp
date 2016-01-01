@@ -1,18 +1,10 @@
 # include "stdafx.h"
 # include "MidiParser.h"
-
-# include "FileParser.h"
 # include "MidiStruct.h"
-
 # include "Event.h"
 
-using namespace std;
+using std::vector;
 using namespace MidiStruct;
-
-MidiParser::MidiParser(const char* fileName) :
-	IMidiParser(),
-	inputFile_(make_unique<FileParser>(fileName))
-{}
 
 MidiParser::~MidiParser()
 {
@@ -63,7 +55,7 @@ vector<TrackEvent> MidiParser::ReadTrackEvents(const uint32_t length) const
 	while (inputFile_->GetBytesRemained() > 0)
 	{
 		result.emplace_back();
-		result.back().deltaTime = inputFile_->ReadVarLenFormat();	// may throw std::length_error
+		result.back().deltaTime = inputFile_->ReadVarLenFormat();	// may throw
 		result.back().eventChunk = *(Event::GetInstance(inputFile_)->Read());
 	}
 

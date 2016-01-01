@@ -40,9 +40,9 @@
 1 > 0 ==> running status = new bottom value
 				4		New top value
 ****************************************************************/
-
-# include "..\\MidiParser\MidiEvent.h"
-# include "..\\MidiParser\MidiStruct.h"
+# include "..\MidiParser\MidiError.h"
+# include "..\MidiParser\MidiEvent.h"
+# include "..\MidiParser\MidiStruct.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MidiEvent, 47);
@@ -53,25 +53,23 @@ FIXTURE(MidiEvent, 47);
 													ASSERT_EQ((VELOC),	result_->velocity)	<< (MESSG);	}
 TEST_F(Test_MidiEvent, Read_impl)
 {
-	using std::runtime_error;
-
 	ASSERT_NO_FATAL_FAILURE(Event::GetInstance(file_))	<< "3rd line (F0) = system event";
 	ASSERT_NO_FATAL_FAILURE(Event::GetInstance(file_))	<< "4th line (F5) = system event";
 	ASSERT_NO_FATAL_FAILURE(file_->SkipData(1))			<< "5th line (FF) = meta event";
 
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "Empty line";		// Reads one status-byte
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "Empty line";		// Reads one status-byte
 
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "00 running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "0F running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "1E running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "2D running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "3C running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "4B running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "5A running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "69 running status";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "78 running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "00 running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "0F running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "1E running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "2D running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "3C running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "4B running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "5A running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "69 running status";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "78 running status";
 
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "Empty line";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "Empty line";
 
 	CHECK_RESULT('\x87', 15, 31, "note off");						// Reads three bytes: status, note and velocity
 	CHECK_RESULT('\x96', 60, 0, "note on");

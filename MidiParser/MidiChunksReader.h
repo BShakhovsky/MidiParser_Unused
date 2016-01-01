@@ -12,16 +12,16 @@ class MidiChunksReader : private boost::noncopyable
 {
 	MidiChunksReader() = delete;
 public:
-	explicit MidiChunksReader(const char *fileName);				// for use in production
-	explicit MidiChunksReader(std::unique_ptr<class IMidiParser>);	// for unit tests
+	explicit MidiChunksReader(const char* fileName);					// for use in production
+	explicit MidiChunksReader(const wchar_t* fileName);
+	explicit MidiChunksReader(std::unique_ptr<class IMidiParser> mock);	// for unit tests
 	~MidiChunksReader();
 
 	static uint32_t SMPTE_TicksPerSec(uint32_t division, bool toPrint = false);
 
-	const MidiStruct::HeaderChunk ReadHeaderChunk() const;
-		// may throw std::runtime_error, std::length_error and std::logic_error
+	const MidiStruct::HeaderChunk ReadHeaderChunk() const;			// may throw
 	const MidiStruct::TrackChunk ReadTrackChunk() const;
-		// skips alien chunks (non "MTrk"), pImpl_::ReadEvent() may throw std::runtime_error
+		// skips alien chunks (non "MTrk"),		pImpl_::ReadEvent() may throw
 private:
 	const std::unique_ptr<IMidiParser> pImpl_;
 };

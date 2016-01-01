@@ -1,21 +1,13 @@
 # include "stdafx.h"
 # include "FileParser.h"
-# include "FileCounter.h"
 # include "MidiStruct.h"
 
-using namespace std;
-
-FileParser::FileParser(const char *fileName) : IFileParser(),
-	inputFile_(fileName, ifstream::binary),
-	bytesRemained_(make_shared<FileCounter>())
-{
-	if (inputFile_.fail()) throw runtime_error(string("CANNOT OPEN INPUT FILE ") + fileName);
-}
+using std::shared_ptr;
 
 void FileParser::CloseFile()
 {
 	inputFile_.close();
-	if (inputFile_.fail()) throw runtime_error("CANNOT CLOSE INPUT FILE");
+	if (inputFile_.fail()) throw MidiError("CANNOT CLOSE INPUT FILE");
 }
 
 int FileParser::GetBytesRemained() const
@@ -27,8 +19,8 @@ void FileParser::SetBytesRemained(const int value) const
 	bytesRemained_->Set(value);
 }
 
-# define CHECK_FLAGS {	if (inputFile_.eof()) throw length_error("END OF INPUT FILE IS REACHED");	\
-					else if (inputFile_.fail()) throw runtime_error(__FUNCTION__);					}
+# define CHECK_FLAGS {	if (inputFile_.eof()) throw MidiError("END OF INPUT FILE IS REACHED");	\
+					else if (inputFile_.fail()) throw MidiError(__FUNCTION__);					}
 
 int FileParser::PeekByte()
 {
@@ -87,7 +79,7 @@ unsigned FileParser::ReadVarLenFormat()
 	{
 		anotherByte = ReadByte();
 		if (++totalBytes > Bytes::varLengthSize)
-			throw length_error("UNEXPECTED VARIABLE LENGTH > FOUR BYTES");
+			throw MidiError("UNEXPECTED VARIABLE LENGTH > FOUR BYTES");
 		result <<= Bytes::byteSize - 1;
 		result |= static_cast<unsigned char>(anotherByte & 0x7F);
 	} while (anotherByte < 0);	// ends when the most significant bit is unset

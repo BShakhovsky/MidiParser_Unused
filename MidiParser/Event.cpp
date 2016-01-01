@@ -2,6 +2,7 @@
 # include "Event.h"
 # include "MidiStruct.h"
 # include "IFileParser.h"
+# include "MidiError.h"
 
 using namespace std;
 using MidiStruct::EventChunk;
@@ -24,7 +25,7 @@ Event::~Event()
 unique_ptr<Event> Event::GetInstance(FileParser_ file)
 {
 	if (file) fileParser_ = file;
-	else if (!fileParser_) throw std::runtime_error("INPUT FILE HAS NOT BEEN SET YET");
+	else if (!fileParser_) throw MidiError("INPUT FILE HAS NOT BEEN SET YET");
 
 	const auto status(fileParser_->ReadByte());
 	if ((status & 0x0'F0) == 0xF0)	// 0xF0 is negative ==> 0x0F0 is positive

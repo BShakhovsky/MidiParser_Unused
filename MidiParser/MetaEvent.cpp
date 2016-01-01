@@ -2,8 +2,7 @@
 # include "MetaEvent.h"
 # include "MidiStruct.h"
 # include "IFileParser.h"
-
-using namespace std;
+# include "MidiError.h"
 
 MetaEvent::MetaEvent(const char statusByte, const char metaType) :
 	Event(statusByte)
@@ -11,9 +10,9 @@ MetaEvent::MetaEvent(const char statusByte, const char metaType) :
 	GetChunk()->metaType = metaType;
 }
 
-unique_ptr<MetaEvent> MetaEvent::GetInstance(const char statusByte)
+std::unique_ptr<MetaEvent> MetaEvent::GetInstance(const char statusByte)
 {
-	if (!GetInputFile()) throw runtime_error("INPUT FILE HAS NOT BEEN SET YET");
+	if (!GetInputFile()) throw MidiError("INPUT FILE HAS NOT BEEN SET YET");
 	const auto metaType(GetInputFile()->ReadByte());
 
 	switch (metaType)
@@ -25,6 +24,6 @@ unique_ptr<MetaEvent> MetaEvent::GetInstance(const char statusByte)
 	case 0x2F:	return MetaEvent_EndTrack	::GetInstance(statusByte, metaType); break;
 	case 0x51:	return MetaEvent_Tempo		::GetInstance(statusByte, metaType); break;
 	case 0x59:	return MetaEvent_KeySign	::GetInstance(statusByte, metaType); break;
-	default: throw runtime_error("WRONG META TYPE");
+	default: throw MidiError("WRONG META TYPE");
 	}
 }

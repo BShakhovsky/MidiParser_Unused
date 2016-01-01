@@ -57,7 +57,7 @@
 		2 = Ok
 			7 = seven dieses
 *******************************************/
-
+# include "..\MidiParser\MidiError.h"
 # include "..\MidiParser\MetaEvent_KeySign.h"
 # include "MidiParser_EventCommon.h"
 
@@ -65,7 +65,6 @@ FIXTURE(MetaEvent_KeySign, 59);
 
 TEST_F(Test_MetaEvent_KeySign, Read_impl)
 {
-	using std::runtime_error;
 	using testing::FLAGS_gtest_break_on_failure;
 
 	FLAGS_gtest_break_on_failure = false;
@@ -76,9 +75,9 @@ TEST_F(Test_MetaEvent_KeySign, Read_impl)
 	EXPECT_NONFATAL_FAILURE(CHECK_WHAT, "Wrong key signature chunk length, 5 bytes skipped");
 
 	FLAGS_gtest_break_on_failure = true;
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "WRONG KEY SIGNATURE, SHOULD BE 0...7 BEMOLES OR DIESES";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "WRONG KEY SIGNATURE, SHOULD BE EITHER MAJOR OR MINOR";
-	ASSERT_THROW(CHECK_WHAT, runtime_error) << "WRONG KEY SIGNATURE, SHOULD BE 0...7 BEMOLES OR DIESES";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "WRONG KEY SIGNATURE, SHOULD BE 0...7 BEMOLES OR DIESES";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "WRONG KEY SIGNATURE, SHOULD BE EITHER MAJOR OR MINOR";
+	ASSERT_THROW(CHECK_WHAT, MidiError) << "WRONG KEY SIGNATURE, SHOULD BE 0...7 BEMOLES OR DIESES";
 
 	ASSERT_NO_FATAL_FAILURE(CHECK_WHAT) << "7 bemoles, major key";
 	ASSERT_NO_FATAL_FAILURE(CHECK_WHAT) << "natural minor key = Lya-Minor";

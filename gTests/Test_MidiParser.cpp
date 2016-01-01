@@ -2,9 +2,9 @@
 # include "..\MidiParser\MidiParser.h"
 # include "..\MidiParser\MidiStruct.h"
 # include "..\MidiParser\FileParser.h"
+# include "..\MidiParser\MidiError.h"
 # include "CurrentFileName.h"
 
-using std::runtime_error;
 using namespace testing;
 
 class Test_MidiParser : public Test
@@ -67,8 +67,8 @@ TEST_F(Test_MidiParser, ReadHeaderData)
 						ASSERT_EQ((NOTE),		result.at(INDEX).eventChunk.note);				\
 						ASSERT_EQ((VELOCITY),	result.at(INDEX).eventChunk.velocity);			}
 
-# define CATCH			catch (const runtime_error& e) { ASSERT_STREQ(throwMsg, e.what());		}
-# define CATCH_AND_DIE	catch (const runtime_error& e) { ASSERT_STREQ(throwMsg, e.what());		\
+# define CATCH			catch (const MidiError& e) { ASSERT_STREQ(throwMsg, e.what());		}
+# define CATCH_AND_DIE	catch (const MidiError& e) { ASSERT_STREQ(throwMsg, e.what());		\
 	assert(!"LOGICAL ERROR IN COUNTING BYTES REMAINED TO READ FROM MIDI FILE");					}
 
 TEST_F(Test_MidiParser, ReadTrackEvents)

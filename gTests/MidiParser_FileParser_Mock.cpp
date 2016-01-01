@@ -2,6 +2,7 @@
 # include "MidiParser_FileParser_Mock.h"
 # include "..\MidiParser\FileCounter.h"
 # include "..\MidiParser\MidiStruct.h"
+# include "..\MidiParser\MidiError.h"
 
 using namespace std;
 using gTest::FileParser_Mock;
@@ -83,6 +84,6 @@ unsigned FileParser_Mock::ReadVarLenFormat()
 	auto anotherByte('\0');
 
 	for (; (anotherByte = ReadByte()) < 0; result -= anotherByte)	// ends with the positive byte
-		if (++totalBytes >= Bytes::varLengthSize) throw length_error("UNEXPECTED VARIABLE LENGTH > FOUR BYTES");
+		if (++totalBytes >= Bytes::varLengthSize) throw MidiError("UNEXPECTED VARIABLE LENGTH > FOUR BYTES");
 	return static_cast<unsigned>(result + anotherByte);
 }

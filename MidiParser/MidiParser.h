@@ -1,5 +1,6 @@
 # pragma once
 # include "IMidiParser.h"
+# include "FileParser.h"
 
 namespace MidiStruct
 {
@@ -12,7 +13,11 @@ class MidiParser : public IMidiParser
 
 	MidiParser() = delete;
 public:
-	explicit MidiParser(const char* fileName);
+	template<typename T>
+	explicit MidiParser(T fileName) :
+		IMidiParser(),
+		inputFile_(std::make_unique<FileParser>(fileName))
+	{}
 	virtual ~MidiParser() override final;
 
 	virtual const MidiStruct::ChunkIntro ReadChunkIntro() const override final;
@@ -20,7 +25,7 @@ public:
 
 	virtual void SkipTrackEvents(uint32_t length) const override final;
 	virtual std::vector<MidiStruct::TrackEvent> ReadTrackEvents(uint32_t length) const override final;
-		// may throw std::length_error
+		// may throw
 private:
 	const MidiStruct::ChunkType ReadChunkType() const;
 };

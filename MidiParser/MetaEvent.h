@@ -10,13 +10,13 @@ protected:
 private:
 	MetaEvent() = delete;
 	static std::unique_ptr<MetaEvent> GetInstance(char statusByte);
-	virtual void Read_impl() override = 0;	// may throw std::runtime_error
+	virtual void Read_impl() override = 0;	// may throw
 	friend class Event;
 
 # define META_DECL(EVENT)	MetaEvent_ ## EVENT () = delete;											\
 	static std::unique_ptr<MetaEvent_ ## EVENT > GetInstance(char statusByte, char metaType)			\
 		{ return std::unique_ptr<MetaEvent_ ## EVENT >(new MetaEvent_ ## EVENT(statusByte, metaType)); }\
-	virtual void Read_impl() override final;	/* may throw std::runtime_error */						\
+	virtual void Read_impl() override final;	/* may throw */											\
 	friend class MetaEvent;
 };
 

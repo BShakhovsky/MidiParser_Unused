@@ -3,6 +3,7 @@
 # include "MidiTracksCollector.h"
 # include "MidiChunksReader.h"
 # include "MidiStruct.h"
+# include "MidiError.h"
 
 using namespace std;
 using MidiStruct::TrackEvent;
@@ -36,15 +37,18 @@ uint32_t RealMicrosec(uint32_t deltaTime, uint32_t tempoSetting, uint16_t divisi
 		return deltaTime * tempoSetting / division;
 }
 
-void MidiTimeCalculator::LoadMidiData(const char* fileName)
-{
-	const auto midiData_(make_unique<MidiTracksCollector>(fileName));
-	midiData_->ReadMidiFile();
-
-	tempoDivision_ = midiData_->GetHeaderData()->division;
-	tracks_ = midiData_->GetTracks();
-	if (tracks_.empty()) throw logic_error("MIDI FILE DOES NOT CONTAIN ANY TRACKS");
+#define LOAD_MIDI_DATA(CHAR_TYPE)													\
+void MidiTimeCalculator::LoadMidiData(const CHAR_TYPE* fileName)					\
+{																					\
+	const auto midiData_(make_unique<MidiTracksCollector>(fileName));				\
+	midiData_->ReadMidiFile();														\
+																					\
+	tempoDivision_ = midiData_->GetHeaderData()->division;							\
+	tracks_ = midiData_->GetTracks();												\
+	if (tracks_.empty()) throw MidiError("MIDI FILE DOES NOT CONTAIN ANY TRACKS");	\
 }
+LOAD_MIDI_DATA(char)
+LOAD_MIDI_DATA(wchar_t)
 
 void MidiTimeCalculator::CalcDeltaTimes()
 {

@@ -12,8 +12,8 @@ class MidiParser_Facade
 
 	MidiParser_Facade() = delete;
 public:
-	explicit MidiParser_Facade(const char* fileName);	// may throw std::runtime_error \
-														// This module must be called just once, \
+	explicit MidiParser_Facade(const char* fileName);	// may throw
+	explicit MidiParser_Facade(const wchar_t* fileName);// This module must be called just once, \
 														// therefore everything is done in constructor
 	const Times_& GetMilliSeconds() const
 	{

@@ -111,6 +111,9 @@
     <ClInclude Include="MidiStruct.h">
       <Filter>Header Files\Struct</Filter>
     </ClInclude>
+    <ClInclude Include="MidiError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

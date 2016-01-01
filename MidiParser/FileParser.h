@@ -1,5 +1,7 @@
 # pragma once
 # include "IFileParser.h"
+# include "FileCounter.h"
+# include "MidiError.h"
 
 class FileParser : public IFileParser
 {
@@ -9,7 +11,14 @@ class FileParser : public IFileParser
 
 	FileParser() = delete;
 public:
-	explicit FileParser(const char *fileName);
+	template<typename T>
+	explicit FileParser(T fileName) : IFileParser(),
+		inputFile_(fileName, std::ifstream::binary),
+		bytesRemained_(std::make_shared<FileCounter>())
+	{
+		if (inputFile_.fail()) throw MidiError("Cannot open input file");
+	}
+
 	virtual ~FileParser() override final = default;
 
 	virtual void CloseFile() override final;
@@ -23,7 +32,7 @@ public:
 	virtual void SkipData(std::streamoff offset) override final;
 			
 	virtual unsigned ReadInverse(unsigned nBytes, bool toCheck) override final;
-	virtual unsigned ReadVarLenFormat() override final;	// may throw std::length_error
+	virtual unsigned ReadVarLenFormat() override final;	// may throw
 };
 
 uint32_t ReadWord(std::shared_ptr<IFileParser> fileParser);		// Word = 4 bytes!!!

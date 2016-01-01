@@ -65,18 +65,16 @@
 -1	FF
 	128	WRONG META TYPE
 ******************************************/
-
+# include "..\MidiParser\MidiError.h"
 # include "..\MidiParser\MetaEvent.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent, 66);
 
-# define CHECK_THROW(META_TYPE) ASSERT_THROW(Event::GetInstance(file_), runtime_error)	\
+# define CHECK_THROW(META_TYPE) ASSERT_THROW(Event::GetInstance(file_), MidiError)	\
 												<< (META_TYPE) << " = WRONG META TYPE"	;
 TEST_F(Test_MetaEvent, GetInstance)
 {
-	using std::runtime_error;
-
 	CHECK_THROW(-1);
 	CHECK_TYPE(0, MetaEvent_Text);	CHECK_TYPE(1, MetaEvent_Text);		CHECK_TYPE(2, MetaEvent_Text);
 	CHECK_TYPE(3, MetaEvent_Text);	CHECK_TYPE(4, MetaEvent_Text);		CHECK_TYPE(5, MetaEvent_Text);

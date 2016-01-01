@@ -10,7 +10,11 @@ MidiTracksCollector::MidiTracksCollector(const char* fileName) :
 	headerData_(nullptr),
 	tracks_()
 {}
-
+MidiTracksCollector::MidiTracksCollector(const wchar_t* fileName) :
+	midiFile_(make_unique<MidiChunksReader>(fileName)),
+	headerData_(nullptr),
+	tracks_()
+{}
 MidiTracksCollector::~MidiTracksCollector() {}
 
 void MidiTracksCollector::ReadMidiFile()
@@ -29,7 +33,7 @@ void MidiTracksCollector::ReadTracks()
 	for (uint16_t i(0); i < headerData_->tracks; ++i)
 	{
 		const auto result(midiFile_->ReadTrackChunk().trackEvent);
-		if (!result.empty()) tracks_.push_back(result);	// may throw std::runtime_error
+		if (!result.empty()) tracks_.push_back(result);	// may throw
 //		cout << "\n\nEnd of track " << i + 1 << " of " << headerData_->tracks << endl;
 	}
 }

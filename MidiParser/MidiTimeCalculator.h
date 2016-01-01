@@ -25,6 +25,7 @@ public:
 	~MidiTimeCalculator();
 
 	void LoadMidiData(const char* fileName);
+	void LoadMidiData(const wchar_t* fileName);
 	void CalcDeltaTimes();
 
 	Times_ GetTimes() const

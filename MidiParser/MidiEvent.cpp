@@ -2,19 +2,18 @@
 # include "MidiEvent.h"
 # include "MidiStruct.h"
 # include "IFileParser.h"
+# include "MidiError.h"
 
 char MidiEvent::runStatus_ = '\0';
 
 void MidiEvent::CheckRunStatus() const
 {
-	using std::runtime_error;
-
 	if (GetChunk()->status < 0)				// most significant byte is set ==> it is status byte, Ok
 	{
 		runStatus_ = GetChunk()->status;	// save running status
 		GetChunk()->note = GetInputFile()->ReadByte();
 	}
-	else if (runStatus_ >= 0) throw runtime_error("MIDI RUNNING STATUS IS NOT CORRECT");
+	else if (runStatus_ >= 0) throw MidiError("MIDI RUNNING STATUS IS NOT CORRECT");
 	else
 	{
 		GetChunk()->note = GetChunk()->status;

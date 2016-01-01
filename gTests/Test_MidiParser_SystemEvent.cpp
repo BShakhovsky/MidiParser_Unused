@@ -21,7 +21,7 @@
 			5	one + five = 6 lines to skip:
 ********************************************/
 
-using std::length_error;
+# include "..\MidiParser\MidiError.h"
 using testing::FLAGS_gtest_break_on_failure;
 
 /*************************************************
@@ -87,7 +87,7 @@ TEST_F(Test_SystemEvent, Read_impl)
 	FLAGS_gtest_break_on_failure = true; 
 	CHECK_OK("F1 = common event");	// not "WRONG MIDI TIME CODE", PeekByte() == 1, Ok
 	CHECK_OK("F0 = exclusive event");
-	ASSERT_THROW(Event::GetInstance(file_)->Read(), length_error) << "VarLenFormat exceeds four bytes";
+	ASSERT_THROW(Event::GetInstance(file_)->Read(), MidiError) << "VarLenFormat exceeds four bytes";
 }
 
 /**************************************************************

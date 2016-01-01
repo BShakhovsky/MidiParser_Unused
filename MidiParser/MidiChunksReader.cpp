@@ -1,29 +1,31 @@
 # include "stdafx.h"
 # include "MidiChunksReader.h"
 # include "MidiParser.h"
-# include "IFileParser.h"
 # include "MidiStruct.h"
 
 using namespace std;
 using namespace MidiStruct;
 
-# pragma warning(push)
-# pragma warning(disable:4711)	// automatic inline expansion
-	MidiChunksReader::MidiChunksReader(const char* fileName) :			// for use in production
-		pImpl_(make_unique<MidiParser>(fileName))
-	{}
-	MidiChunksReader::MidiChunksReader(unique_ptr<IMidiParser> mock) :	// for unit tests
-		pImpl_(mock.release())
-	{}
-	MidiChunksReader::~MidiChunksReader() {}
-# pragma warning(pop)
+#pragma warning(push)
+#pragma warning(disable:4711)	// automatic inline expansion
+MidiChunksReader::MidiChunksReader(const char* fileName) :			// for use in production
+	pImpl_(make_unique<MidiParser>(fileName))
+{}
+MidiChunksReader::MidiChunksReader(const wchar_t* fileName) :		// for use in production
+	pImpl_(make_unique<MidiParser>(fileName))
+{}
+MidiChunksReader::MidiChunksReader(unique_ptr<IMidiParser> mock) :	// for unit tests
+	pImpl_(mock.release())
+{}
+MidiChunksReader::~MidiChunksReader() {}
+#pragma warning(pop)
 
 void CheckHeaderIntro(const ChunkIntro intro)
 {
 	if (intro.type != ChunkIntro::HEADER)
-		throw runtime_error("CORRUPTED MIDI FILE HEADER");
+		throw MidiError("CORRUPTED MIDI FILE HEADER");
 	if (intro.length != (sizeof HeaderData::format + sizeof HeaderData::tracks + sizeof HeaderData::division))
-		throw length_error("CORRUPTED MIDI FILE HEADER LENGTH");
+		throw MidiError("CORRUPTED MIDI FILE HEADER LENGTH");
 }
 
 uint32_t MidiChunksReader::SMPTE_TicksPerSec(const uint32_t division, const bool toPrint)
@@ -50,14 +52,14 @@ void PrintHeaderData(const HeaderData data)
 {
 	switch (data.format)
 	{
-	case 0: if (1 != data.tracks) throw logic_error("CORRUPTED MIDI FILE TRACK NUMBERS");
+	case 0: if (1 != data.tracks) throw MidiError("CORRUPTED MIDI FILE TRACK NUMBERS");
 			cout << "There is a single track" << endl;												break;
 	case 1: cout << "There are " << data.tracks << " tracks to be played simultaneously" << endl;	break;
 	case 2: cout << "There are " << data.tracks << " independant tracks" << endl;					break;
-	default: throw runtime_error("CORRUPTED MIDI FILE FORMAT");
+	default: throw MidiError("CORRUPTED MIDI FILE FORMAT");
 	}
 
-	if (!data.division) throw logic_error("TIME DIVISION IS ZERO, NOT REALLY SURE WHAT IT MEANS");
+	if (!data.division) throw MidiError("TIME DIVISION IS ZERO, NOT REALLY SURE WHAT IT MEANS");
 	else if (data.division & 0x80'00) MidiChunksReader::SMPTE_TicksPerSec(data.division, true);
 	else cout << "Metrical time: Pulses per Quarter Note = " << data.division << " (pulses are MIDI imaginary time units)";
 }

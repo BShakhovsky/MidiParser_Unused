@@ -1,6 +1,7 @@
 # include "stdafx.h"
 # include "..\MidiParser\MidiChunksReader.h"
 # include "..\MidiParser\MidiStruct.h"
+# include "..\MidiParser\MidiError.h"
 # include "MidiParser_Mock.h"
 # include "CurrentFileName.h"
 
@@ -21,10 +22,8 @@ public:
 
 	virtual void SetUp() override final
 	{
-		using boost::lexical_cast;
-
 		FLAGS_gtest_break_on_failure = true;
-		ASSERT_THROW(MidiChunksReader(CURRENT_FILE_NAME).ReadHeaderChunk(), runtime_error) << "CORRUPTED MIDI FILE HEADER";
+		ASSERT_THROW(MidiChunksReader(CURRENT_FILE_NAME).ReadHeaderChunk(), MidiError) << "CORRUPTED MIDI FILE HEADER";
 		FLAGS_gtest_break_on_failure = false;
 		union
 		{
@@ -32,7 +31,7 @@ public:
 			uint32_t num;
 		} length;
 		EXPECT_NONFATAL_FAILURE(MidiChunksReader(CURRENT_FILE_NAME).ReadTrackChunk(), "Corrupted MIDI Track Header, "
-			+ lexical_cast<string>(length.num) + " bytes skipped");
+			+ boost::lexical_cast<string>(length.num) + " bytes skipped");
 		FLAGS_gtest_break_on_failure = true;
 	}
 	virtual void TearDown() override final {}
@@ -52,25 +51,25 @@ public:
 
 TEST_F(Test_MidiChunksReader, ReadHeaderChunk)
 {
-	ASSERT_THROW(midi_.ReadHeaderChunk(), runtime_error) << R"(	header != "MThd"	)";
-	ASSERT_THROW(midi_.ReadHeaderChunk(), length_error) << "length = 0";
-	ASSERT_THROW(midi_.ReadHeaderChunk(), length_error) << "length < sizeof HeaderData";
-	ASSERT_THROW(midi_.ReadHeaderChunk(), length_error) << "length > sizeof HeaderData";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << R"(	header != "MThd"	)";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "length = 0";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "length < sizeof HeaderData";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "length > sizeof HeaderData";
 
-	ASSERT_THROW(midi_.ReadHeaderChunk(), logic_error) << "tracks = 0";
-	ASSERT_THROW(midi_.ReadHeaderChunk(), logic_error) << "tracks > 1";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "tracks = 0";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "tracks > 1";
 
-	ASSERT_THROW(midi_.ReadHeaderChunk(), logic_error) << "format = 0, division = 0";
-	ASSERT_THROW(midi_.ReadHeaderChunk(), logic_error) << "format = 1, division = 0";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "format = 0, division = 0";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "format = 1, division = 0";
 	try
 	{
 		midi_.ReadHeaderChunk();
 	}
-	catch (const runtime_error& e)
+	catch (const MidiError& e)
 	{
 		ASSERT_STREQ("CORRUPTED MIDI FILE FORMAT", e.what()) << "format > 2";
 	}
-	ASSERT_THROW(midi_.ReadHeaderChunk(), logic_error) << "format = 2, division = 0";
+	ASSERT_THROW(midi_.ReadHeaderChunk(), MidiError) << "format = 2, division = 0";
 
 	HeaderChunk result = { NULL, NULL, NULL };
 	ASSERT_NO_FATAL_FAILURE(result = midi_.ReadHeaderChunk());

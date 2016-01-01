@@ -5,7 +5,8 @@
 
 # pragma warning(push)
 #	ifdef _DEBUG
-#		pragma warning(disable:4702)	// unreachable code (but may become reachable by mistake ==> test it)
+#		pragma warning(disable:4702)	// unreachable code (but may become reachable by mistake \
+										// ==> test it)
 #	endif
 void MetaEvent_Text::Read_impl()
 {
@@ -29,9 +30,10 @@ void MetaEvent_Text::ReadText(const char* eventMsg) const
 {
 	using namespace std;
 
-	const auto length = GetInputFile()->ReadVarLenFormat();		// may throw std::length_error
+	const auto length = GetInputFile()->ReadVarLenFormat();		// may throw
 	if (length > 0xFF) WARNING("Max 256 byts and ISO-8859-1 character set allowed");
 	vector<char> result(length + 1);							// + zero-byte in the end
 	GetInputFile()->ReadData(result.data(), length);
-	if (eventMsg) cout << '\n' << eventMsg << " \"" << result.data() << '\"';	// not covered by unit tests
+	if (eventMsg) cout << '\n' << eventMsg << " \"" << result.data() << '\"';
+																// not covered by unit tests
 }
