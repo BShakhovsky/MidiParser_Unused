@@ -9,23 +9,25 @@ using namespace MidiStruct;
 #pragma warning(push)
 #pragma warning(disable:4711)	// automatic inline expansion
 MidiChunksReader::MidiChunksReader(const char* fileName) :			// for use in production
-	pImpl_(make_unique<MidiParser>(fileName))
+	pImpl_(make_unique<MidiParser>(fileName)),
+	log_(), trackName_()
 {}
 MidiChunksReader::MidiChunksReader(const wchar_t* fileName) :		// for use in production
-	pImpl_(make_unique<MidiParser>(fileName))
+	pImpl_(make_unique<MidiParser>(fileName)),
+	log_(), trackName_()
 {}
 MidiChunksReader::MidiChunksReader(unique_ptr<IMidiParser> mock) :	// for unit tests
-	pImpl_(mock.release())
+	pImpl_(mock.release()),
+	log_(), trackName_()
 {}
 MidiChunksReader::~MidiChunksReader() {}
 #pragma warning(pop)
 
 void CheckHeaderIntro(const ChunkIntro intro)
 {
-	if (intro.type != ChunkIntro::HEADER)
-		throw MidiError("CORRUPTED MIDI FILE HEADER");
-	if (intro.length != (sizeof HeaderData::format + sizeof HeaderData::tracks + sizeof HeaderData::division))
-		throw MidiError("CORRUPTED MIDI FILE HEADER LENGTH");
+	if (intro.type != ChunkIntro::HEADER)	throw MidiError("CORRUPTED MIDI FILE HEADER");
+	if (intro.length != (sizeof HeaderData::format + sizeof HeaderData::tracks
+		+ sizeof HeaderData::division))		throw MidiError("CORRUPTED MIDI FILE HEADER LENGTH");
 }
 
 uint32_t MidiChunksReader::SMPTE_TicksPerSec(const uint32_t division, const bool toPrint)
@@ -35,50 +37,54 @@ uint32_t MidiChunksReader::SMPTE_TicksPerSec(const uint32_t division, const bool
 		frames((division & 0x0'FF'00 >> Bytes::byteSize) * (-1)),
 		result(ticks * frames);
 
-	if (toPrint)
-	{
-		switch (frames)
-		{
-		case 24: case 25: case 29: case 30: break;
-		default: WARNING("Wrong frames per second SMPTE time");
-		}
-		cout << "Time-code-based time: ticks per frame = " << ticks << ", frames per second SMPTE time = " << frames
-			<< "\n\tTherefore, ticks per second = " << ticks << " * " << frames << " = " << result;
-	}
+	if (toPrint && (frames != 24 || frames != 25 || frames != 29 || frames != 30))
+		WARNING("Wrong frames per second SMPTE time");
+//		"Time-code-based time: ticks per frame = " + ticks + ", frames per second SMPTE time = "
+//			+ frames + "\n\tTherefore, ticks per second = " + ticks + " * " + frames + " = " + result;
 	return result;
 }
 
-void PrintHeaderData(const HeaderData data)
+const HeaderChunk MidiChunksReader::ReadHeaderChunk()
 {
-	switch (data.format)
-	{
-	case 0: if (1 != data.tracks) throw MidiError("CORRUPTED MIDI FILE TRACK NUMBERS");
-			cout << "There is a single track" << endl;												break;
-	case 1: cout << "There are " << data.tracks << " tracks to be played simultaneously" << endl;	break;
-	case 2: cout << "There are " << data.tracks << " independant tracks" << endl;					break;
-	default: throw MidiError("CORRUPTED MIDI FILE FORMAT");
-	}
+	using boost::format;
 
-	if (!data.division) throw MidiError("TIME DIVISION IS ZERO, NOT REALLY SURE WHAT IT MEANS");
-	else if (data.division & 0x80'00) MidiChunksReader::SMPTE_TicksPerSec(data.division, true);
-	else cout << "Metrical time: Pulses per Quarter Note = " << data.division << " (pulses are MIDI imaginary time units)";
-}
-
-const HeaderChunk MidiChunksReader::ReadHeaderChunk() const
-{
 	HeaderChunk result;
-	result.intro = pImpl_->ReadChunkIntro();	CheckHeaderIntro(result.intro);
-	result.data = pImpl_->ReadHeaderData();		PrintHeaderData(result.data);
+	result.intro = pImpl_->ReadChunkIntro();
+	CheckHeaderIntro(result.intro);
+	result.data = pImpl_->ReadHeaderData();
+	log_ += pImpl_->GetLogAndFlush();
+
+	if (result.data.format == 0)
+	{
+		if (1 != result.data.tracks)
+			throw MidiError("CORRUPTED MIDI FILE TRACK NUMBERS");
+	}
+	else if (result.data.format != 1 && result.data.format != 2)
+		throw MidiError("CORRUPTED MIDI FILE FORMAT");
+
+	if (!result.data.division)
+		throw MidiError("TIME DIVISION IS ZERO, NOT REALLY SURE WHAT IT MEANS");
+	else if (result.data.division & 0x80'00)
+		MidiChunksReader::SMPTE_TicksPerSec(result.data.division, true);
+//	else
+//	{
+//		log_ += "Metrical time: Pulses per Quarter Note = " + result.data.division;
+//		log_ += " (pulses are MIDI imaginary time units)";
+//	}
+
 	return result;
 }
 
 
-const TrackChunk MidiChunksReader::ReadTrackChunk() const
+const TrackChunk MidiChunksReader::ReadTrackChunk()
 {
-	TrackChunk result;
-							result.intro =		pImpl_->ReadChunkIntro();
-	if (ChunkIntro::TRACK != result.intro.type)	pImpl_->SkipTrackEvents(result.intro.length);
-	else					result.trackEvent =	pImpl_->ReadTrackEvents(result.intro.length);
+	TrackChunk result{ pImpl_->ReadChunkIntro() };
+	if (ChunkIntro::TRACK != result.intro.type)
+		pImpl_->SkipTrackEvents(result.intro.length);
+	else
+		result.trackEvent =	pImpl_->ReadTrackEvents(result.intro.length);
 
+	log_ += pImpl_->GetLogAndFlush();
+	trackName_ = pImpl_->GetLogAndFlush();
 	return result;
 }

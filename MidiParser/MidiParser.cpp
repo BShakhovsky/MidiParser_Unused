@@ -3,12 +3,27 @@
 # include "MidiStruct.h"
 # include "Event.h"
 
-using std::vector;
+using namespace std;
 using namespace MidiStruct;
 
 MidiParser::~MidiParser()
 {
 	inputFile_->CloseFile();
+}
+
+string GetStrAndFlush(string& str)
+{
+	const auto result(str);
+	str.clear();
+	return result;
+}
+string MidiParser::GetLogAndFlush()
+{
+	return GetStrAndFlush(log_);
+}
+string MidiParser::GetTrackNameAndFlush()
+{
+	return GetStrAndFlush(trackName_);
 }
 
 
@@ -47,7 +62,7 @@ void MidiParser::SkipTrackEvents(const uint32_t length) const
 	WARNING("Corrupted MIDI Track Header, " << length << " bytes skipped");
 }
 
-vector<TrackEvent> MidiParser::ReadTrackEvents(const uint32_t length) const
+vector<TrackEvent> MidiParser::ReadTrackEvents(const uint32_t length)
 {
 	vector<TrackEvent> result;
 
@@ -56,7 +71,10 @@ vector<TrackEvent> MidiParser::ReadTrackEvents(const uint32_t length) const
 	{
 		result.emplace_back();
 		result.back().deltaTime = inputFile_->ReadVarLenFormat();	// may throw
-		result.back().eventChunk = *(Event::GetInstance(inputFile_)->Read());
+		const auto trackEvent(Event::GetInstance(inputFile_));
+		result.back().eventChunk = *(trackEvent->Read());
+		log_ += trackEvent->GetLog();
+		trackName_ += trackEvent->GetTrackName();
 	}
 
 	return result;

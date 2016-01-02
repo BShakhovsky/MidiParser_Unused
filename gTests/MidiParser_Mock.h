@@ -29,6 +29,18 @@ namespace gTest
 		{
 			ADD_FAILURE() << "Corrupted MIDI Track Header, " << length << " bytes skipped";
 		}
-		virtual std::vector<MidiStruct::TrackEvent> ReadTrackEvents(uint32_t) const override final;
+		virtual std::vector<MidiStruct::TrackEvent> ReadTrackEvents(uint32_t) override final
+		{
+			return std::vector<MidiStruct::TrackEvent>();
+		}
+
+		virtual std::string GetLogAndFlush() override final
+		{
+			return "";
+		}
+		virtual std::string GetTrackNameAndFlush() override final
+		{
+			return "";
+		}
 	};
 }

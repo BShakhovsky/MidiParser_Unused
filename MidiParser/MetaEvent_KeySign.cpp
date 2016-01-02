@@ -24,5 +24,6 @@ void MetaEvent_KeySign::Read_impl()
 	{
 		pimpl_->KeySignInit(GetInputFile());
 		pimpl_->PrintKeySignature();	// not covered by unit tests
+		AppendLog(pimpl_->GetLog());
 	}
 }

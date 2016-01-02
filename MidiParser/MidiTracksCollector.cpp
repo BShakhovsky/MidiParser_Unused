@@ -8,12 +8,16 @@ using namespace std;
 MidiTracksCollector::MidiTracksCollector(const char* fileName) :
 	midiFile_(make_unique<MidiChunksReader>(fileName)),
 	headerData_(nullptr),
-	tracks_()
+	tracks_(),
+	log_(),
+	trackNames_()
 {}
 MidiTracksCollector::MidiTracksCollector(const wchar_t* fileName) :
 	midiFile_(make_unique<MidiChunksReader>(fileName)),
 	headerData_(nullptr),
-	tracks_()
+	tracks_(),
+	log_(),
+	trackNames_()
 {}
 MidiTracksCollector::~MidiTracksCollector() {}
 
@@ -25,15 +29,17 @@ void MidiTracksCollector::ReadMidiFile()
 	else
 	headerData_ = make_shared<HeaderData>(midiFile_->ReadHeaderChunk().data);
 	ReadTracks();
+	log_ += midiFile_->GetLog();
 }
 
 void MidiTracksCollector::ReadTracks()
 {
 	tracks_.reserve(headerData_->tracks);
+	trackNames_.reserve(headerData_->tracks);
 	for (uint16_t i(0); i < headerData_->tracks; ++i)
 	{
 		const auto result(midiFile_->ReadTrackChunk().trackEvent);
 		if (!result.empty()) tracks_.push_back(result);	// may throw
-//		cout << "\n\nEnd of track " << i + 1 << " of " << headerData_->tracks << endl;
+		trackNames_.push_back(midiFile_->GetTrackName());
 	}
 }

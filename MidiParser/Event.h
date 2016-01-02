@@ -11,10 +11,19 @@ class Event abstract : private boost::noncopyable
 	typedef std::shared_ptr<MidiStruct::EventChunk> EventChunk_;
 	static FileParser_ fileParser_;
 	EventChunk_ eventChunk_;
+	std::string log_, trackName_;
 public:
 	static std::unique_ptr<Event> GetInstance(FileParser_ = nullptr);
 	virtual ~Event() = 0;
 	EventChunk_ Read();
+	const std::string& GetLog() const
+	{
+		return log_;
+	}
+	const std::string& GetTrackName() const
+	{
+		return trackName_;
+	}
 protected:
 	explicit Event(char statusByte);
 
@@ -25,6 +34,14 @@ protected:
 	EventChunk_ GetChunk() const
 	{
 		return eventChunk_;
+	}
+	void AppendLog(const std::string& log)
+	{
+		log_ += log;
+	}
+	void SetTrackName(const std::string& name)
+	{
+		trackName_ = name;
 	}
 			
 	void SkipEvent() const;

@@ -11,6 +11,9 @@ MidiParser_Facade::MidiParser_Facade(const CHAR_TYPE* fileName)	\
 																\
 	times_ = midiFile.GetTimes();								\
 	notes_ = midiFile.GetNotes();								\
+																\
+	log_ = midiFile.GetLog();									\
+	trackNames_ = midiFile.GetTrackNames();						\
 }
 MIDI_PARSER_FACADE(char)
 MIDI_PARSER_FACADE(wchar_t)

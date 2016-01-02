@@ -14,7 +14,10 @@ public:
 	virtual const MidiStruct::HeaderData ReadHeaderData() const = 0;
 
 	virtual void SkipTrackEvents(uint32_t length) const = 0;
-	virtual std::vector<MidiStruct::TrackEvent> ReadTrackEvents(uint32_t length) const = 0;
+	virtual std::vector<MidiStruct::TrackEvent> ReadTrackEvents(uint32_t length) = 0;
+
+	virtual std::string GetLogAndFlush() = 0;
+	virtual std::string GetTrackNameAndFlush() = 0;
 
 	virtual ~IMidiParser() = 0 {}
 protected:

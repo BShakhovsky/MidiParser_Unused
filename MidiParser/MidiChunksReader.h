@@ -19,9 +19,19 @@ public:
 
 	static uint32_t SMPTE_TicksPerSec(uint32_t division, bool toPrint = false);
 
-	const MidiStruct::HeaderChunk ReadHeaderChunk() const;			// may throw
-	const MidiStruct::TrackChunk ReadTrackChunk() const;
-		// skips alien chunks (non "MTrk"),		pImpl_::ReadEvent() may throw
+	const MidiStruct::HeaderChunk ReadHeaderChunk();					// may throw
+	const MidiStruct::TrackChunk ReadTrackChunk();
+					// skips alien chunks (non "MTrk"), pImpl_::ReadEvent() may throw
+
+	const std::string& GetLog() const
+	{
+		return log_;
+	}
+	const std::string& GetTrackName() const
+	{
+		return trackName_;
+	}
 private:
 	const std::unique_ptr<IMidiParser> pImpl_;
+	std::string log_, trackName_;
 };

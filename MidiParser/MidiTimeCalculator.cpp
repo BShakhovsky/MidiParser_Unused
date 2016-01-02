@@ -18,7 +18,10 @@ MidiTimeCalculator::MidiTimeCalculator() :
 	notes_(),
 
 	currentTrack_(NULL),
-	currentEvent_(NULL)
+	currentEvent_(NULL),
+
+	log_(),
+	trackNames_()
 {
 	milliSeconds_.emplace_back(vector<unsigned>());
 	notes_.emplace_back(vector<int16_t>());
@@ -40,18 +43,23 @@ uint32_t RealMicrosec(uint32_t deltaTime, uint32_t tempoSetting, uint16_t divisi
 #define LOAD_MIDI_DATA(CHAR_TYPE)													\
 void MidiTimeCalculator::LoadMidiData(const CHAR_TYPE* fileName)					\
 {																					\
-	const auto midiData_(make_unique<MidiTracksCollector>(fileName));				\
-	midiData_->ReadMidiFile();														\
+	MidiTracksCollector midiData(fileName);											\
+	midiData.ReadMidiFile();														\
 																					\
-	tempoDivision_ = midiData_->GetHeaderData()->division;							\
-	tracks_ = midiData_->GetTracks();												\
+	tempoDivision_ = midiData.GetHeaderData()->division;							\
+	tracks_ = midiData.GetTracks();													\
 	if (tracks_.empty()) throw MidiError("MIDI FILE DOES NOT CONTAIN ANY TRACKS");	\
+																					\
+	log_ = midiData.GetLog();														\
+	trackNames_ = midiData.GetTrackNames();											\
 }
 LOAD_MIDI_DATA(char)
 LOAD_MIDI_DATA(wchar_t)
 
 void MidiTimeCalculator::CalcDeltaTimes()
 {
+	using boost::format;
+
 	do
 	{
 		if (tempoSettings_.empty()) assert("DELTA TIME STARTED BEFORE TEMPO IS SET" && !GetEvent().deltaTime);
@@ -60,11 +68,15 @@ void MidiTimeCalculator::CalcDeltaTimes()
 		if (-1 == GetEvent().eventChunk.status && 0x51 == GetEvent().eventChunk.metaType)	// -1 = 0xFF
 		{
 			tempoSettings_.insert(make_pair(microSeconds_, GetEvent().eventChunk.metaData));
+			const auto
+				totalSeconds(microSeconds_ / TrackEvent::microSec),
+				milliSeconds(microSeconds_ % TrackEvent::microSec * 10 / TrackEvent::microSec),
 
-			cout << endl;
-			PrintTime();
-			cout << "  Tempo " << (TrackEvent::microSec * TrackEvent::minute / GetTempo())
-				<< " Beats per Minute" << endl;
+				minutes(totalSeconds / TrackEvent::minute),
+				seconds(totalSeconds % TrackEvent::minute);
+			log_ += (format{ "Time %d:%02d:%02d   Tempo = %d Beats per Minute\n" } %
+				minutes % seconds % milliSeconds %
+				(TrackEvent::microSec * TrackEvent::minute / GetTempo())).str();
 		}
 		else if (0x0'90 == (GetEvent().eventChunk.status & 0x0'F0)	// 0xF0 is negative ==> 0x0F0 is positive
 							&& GetEvent().eventChunk.velocity)		// if velocity = 0 ==> "note-off" event
@@ -72,8 +84,6 @@ void MidiTimeCalculator::CalcDeltaTimes()
 			milliSeconds_.back().emplace_back(microSeconds_ / 1'000);
 
 			notes_.back().push_back(GetEvent().eventChunk.note);
-//			PrintTime();
-//			cout << "  Note " << GetEvent().eventChunk.note << '\t';
 		}
 	} while (!EndOfTracks());
 }
@@ -83,12 +93,7 @@ bool MidiTimeCalculator::EndOfTracks()
 	auto result(false);
 	if (++currentEvent_ == tracks_.at(currentTrack_).size())
 	{
-//		cout << "\nEnd of track " << currentTrack_ + 1 << " of " << tracks_.size() << '\n' << endl;
-		if (++currentTrack_ == tracks_.size())
-		{
-//			cout << "===================\n End of all tracks \n===================" << endl;
-			result = true;
-		}
+		if (++currentTrack_ == tracks_.size()) result = true;
 		else
 		{
 			currentEvent_ = NULL;
@@ -96,20 +101,8 @@ bool MidiTimeCalculator::EndOfTracks()
 			milliSeconds_.emplace_back(vector<unsigned>());
 			notes_.emplace_back(vector<int16_t>());
 		}
-//		system("Pause");
 	}
 	return result;
-}
-
-void MidiTimeCalculator::PrintTime() const
-{
-	const auto
-		totalSeconds(microSeconds_ / TrackEvent::microSec),
-		milliSeconds(microSeconds_ % TrackEvent::microSec * 10 / TrackEvent::microSec),
-
-		minutes(totalSeconds / TrackEvent::minute),
-		seconds(totalSeconds % TrackEvent::minute);
-	cout << "Time " << minutes << ':' << setfill('0') << setw(2) << seconds << ':' << milliSeconds;
 }
 
 uint32_t MidiTimeCalculator::GetTempo() const

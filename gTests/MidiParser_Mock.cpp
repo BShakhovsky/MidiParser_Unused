@@ -66,8 +66,3 @@ const HeaderData MidiParser_Mock::ReadHeaderData() const
 
 	return result;
 }
-
-vector<TrackEvent> MidiParser_Mock::ReadTrackEvents(const uint32_t) const
-{
-	return vector<TrackEvent>();
-}

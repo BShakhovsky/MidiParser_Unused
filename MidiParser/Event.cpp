@@ -10,7 +10,8 @@ using MidiStruct::EventChunk;
 Event::FileParser_ Event::fileParser_ = nullptr;
 
 Event::Event(const char statusByte) :
-	eventChunk_(make_shared<EventChunk>())
+	eventChunk_(make_shared<EventChunk>()),
+	log_(), trackName_()
 {
 	memset(eventChunk_.get(), NULL, sizeof (*eventChunk_));
 	eventChunk_->status = statusByte;

@@ -9,6 +9,8 @@ class MidiParser_Facade
 	typedef std::vector<std::vector<int16_t>> Notes_;
 	Times_ times_;
 	Notes_ notes_;
+	std::string log_;
+	std::vector<std::string> trackNames_;
 
 	MidiParser_Facade() = delete;
 public:
@@ -22,6 +24,14 @@ public:
 	const Notes_& GetNotes() const
 	{
 		return notes_;
+	}
+	const std::string& GetLog() const
+	{
+		return log_;
+	}
+	const std::vector<std::string>& GetTrackNames() const
+	{
+		return trackNames_;
 	}
 private:
 	MidiParser_Facade(const MidiParser_Facade&) = delete;

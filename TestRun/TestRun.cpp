@@ -10,13 +10,11 @@ int main()
 	auto timeStart(clock());
 	const MidiParser_Facade midi("../../Test.mid");
 	auto runDuration(clock() - timeStart);
-	printf("\nRun time = %f seconds\n", static_cast<float>(runDuration) / CLOCKS_PER_SEC);
-	system("Pause");
 
 	timeStart = clock();
 	for (auto iter(midi.GetNotes().cbegin()); iter != midi.GetNotes().cend(); ++iter)
 	{
-		printf("\nTRACK #%d of %u\n", static_cast<int>(iter - midi.GetNotes().cbegin() + 1),
+		printf("TRACK #%d of %u\n", static_cast<int>(iter - midi.GetNotes().cbegin() + 1),
 			static_cast<unsigned>(midi.GetNotes().size()));
 		for (auto jiter(iter->cbegin()); jiter != iter->cend(); ++jiter)
 		{
@@ -25,7 +23,7 @@ int main()
 				.at(static_cast<size_t>(jiter - iter->cbegin())),
 				*jiter);
 		}
-		printf("\nEND OF TRACK #%d of %u\n", static_cast<int>(iter - midi.GetNotes().cbegin() + 1),
+		printf("\nEND OF TRACK #%d of %u\n\n", static_cast<int>(iter - midi.GetNotes().cbegin() + 1),
 			static_cast<unsigned>(midi.GetNotes().size()));
 	}
 	puts("===================\nEND OF ALL TRACKS\n===================");

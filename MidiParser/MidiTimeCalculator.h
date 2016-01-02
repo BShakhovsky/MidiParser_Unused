@@ -7,9 +7,7 @@ namespace MidiStruct
 
 class MidiTimeCalculator : private boost::noncopyable
 {
-	uint16_t
-		tempoDivision_,
-		UNUSED_;	// two padding bytes
+	uint16_t tempoDivision_, UNUSED_;	// two padding bytes
 	unsigned long microSeconds_;
 	std::map<unsigned long, uint32_t> tempoSettings_;
 
@@ -20,6 +18,9 @@ class MidiTimeCalculator : private boost::noncopyable
 	Notes_ notes_;
 
 	size_t currentTrack_, currentEvent_;
+
+	std::string log_;
+	std::vector<std::string> trackNames_;
 public:
 	MidiTimeCalculator();
 	~MidiTimeCalculator();
@@ -36,9 +37,16 @@ public:
 	{
 		return notes_;
 	}
+	const std::string& GetLog() const
+	{
+		return log_;
+	}
+	const std::vector<std::string>& GetTrackNames() const
+	{
+		return trackNames_;
+	}
 private:
 	bool EndOfTracks();
-	void PrintTime() const;
 
 	uint32_t GetTempo() const;
 	MidiStruct::TrackEvent GetEvent() const;

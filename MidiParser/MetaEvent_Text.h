@@ -9,6 +9,6 @@ private:
 	explicit MetaEvent_Text(char statusByte, char metaType) :
 		MetaEvent(statusByte, metaType)
 	{}
-	void ReadText(const char* eventMsg = nullptr) const;	// may throw
+	void ReadText(const char* eventMsg);	// may throw
 	META_DECL(Text);
 };
