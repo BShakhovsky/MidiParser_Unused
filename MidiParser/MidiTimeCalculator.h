@@ -7,9 +7,9 @@ namespace MidiStruct
 
 class MidiTimeCalculator : private boost::noncopyable
 {
-	uint16_t tempoDivision_, UNUSED_;	// two padding bytes
-	unsigned long microSeconds_;
-	std::map<unsigned long, uint32_t> tempoSettings_;
+	uint16_t tempoDivision_, UNUSED_[3];	// 6 padding bytes
+	double microSeconds_;
+	std::map<double, uint32_t> tempoSettings_;
 
 	std::vector<std::vector<MidiStruct::TrackEvent>> tracks_;
 	typedef std::vector<std::vector<unsigned>> Times_;

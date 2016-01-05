@@ -1,4 +1,5 @@
 # pragma once
+# pragma comment(lib, "MidiParser.lib")
 
 class MidiParser_Facade
 {

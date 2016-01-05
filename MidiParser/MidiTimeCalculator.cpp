@@ -9,16 +9,16 @@ using namespace std;
 using MidiStruct::TrackEvent;
 
 MidiTimeCalculator::MidiTimeCalculator() :
-	tempoDivision_(NULL),
-	microSeconds_(NULL),
+	tempoDivision_(0ui16),
+	microSeconds_(0.0),
 	tempoSettings_(),
 
 	tracks_(),
 	milliSeconds_(),
 	notes_(),
 
-	currentTrack_(NULL),
-	currentEvent_(NULL),
+	currentTrack_(0u),
+	currentEvent_(0u),
 
 	log_(),
 	trackNames_()
@@ -29,7 +29,7 @@ MidiTimeCalculator::MidiTimeCalculator() :
 
 MidiTimeCalculator::~MidiTimeCalculator() {}
 
-uint32_t RealMicrosec(uint32_t deltaTime, uint32_t tempoSetting, uint16_t division)
+double RealMicrosec(uint32_t deltaTime, uint32_t tempoSetting, uint16_t division)
 {
 	assert("TIME DIVISION IS ZERO, NOT REALLY SURE WHAT IT MEANS" && division);
 
@@ -37,7 +37,7 @@ uint32_t RealMicrosec(uint32_t deltaTime, uint32_t tempoSetting, uint16_t divisi
 		return deltaTime * static_cast<uint32_t>(TrackEvent::microSec)
 			/ MidiChunksReader::SMPTE_TicksPerSec(division);
 	else
-		return deltaTime * tempoSetting / division;
+		return static_cast<double>(deltaTime) * tempoSetting / division;
 }
 
 #define LOAD_MIDI_DATA(CHAR_TYPE)													\
@@ -68,10 +68,9 @@ void MidiTimeCalculator::CalcDeltaTimes()
 		if (-1 == GetEvent().eventChunk.status && 0x51 == GetEvent().eventChunk.metaType)	// -1 = 0xFF
 		{
 			tempoSettings_.insert(make_pair(microSeconds_, GetEvent().eventChunk.metaData));
-			const auto
-				totalSeconds(microSeconds_ / TrackEvent::microSec),
-				milliSeconds(microSeconds_ % TrackEvent::microSec * 10 / TrackEvent::microSec),
-
+			const auto	totalSeconds(static_cast<unsigned long>(microSeconds_) / TrackEvent::microSec),
+						milliSeconds(static_cast<unsigned long>(microSeconds_) % TrackEvent::microSec * 10
+							/ TrackEvent::microSec),
 				minutes(totalSeconds / TrackEvent::minute),
 				seconds(totalSeconds % TrackEvent::minute);
 			log_ += (format{ "Time %d:%02d:%02d   Tempo = %d Beats per Minute\n" } %
@@ -81,8 +80,7 @@ void MidiTimeCalculator::CalcDeltaTimes()
 		else if (0x0'90 == (GetEvent().eventChunk.status & 0x0'F0)	// 0xF0 is negative ==> 0x0F0 is positive
 							&& GetEvent().eventChunk.velocity)		// if velocity = 0 ==> "note-off" event
 		{
-			milliSeconds_.back().emplace_back(microSeconds_ / 1'000);
-
+			milliSeconds_.back().emplace_back(static_cast<unsigned>(microSeconds_ / 1'000));
 			notes_.back().push_back(GetEvent().eventChunk.note);
 		}
 	} while (!EndOfTracks());
