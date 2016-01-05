@@ -85,6 +85,6 @@ const TrackChunk MidiChunksReader::ReadTrackChunk()
 		result.trackEvent =	pImpl_->ReadTrackEvents(result.intro.length);
 
 	log_ += pImpl_->GetLogAndFlush();
-	trackName_ = pImpl_->GetLogAndFlush();
+	trackName_ = pImpl_->GetTrackNameAndFlush();
 	return result;
 }
