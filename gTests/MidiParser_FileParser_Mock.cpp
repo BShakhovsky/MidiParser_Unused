@@ -1,8 +1,8 @@
 # include "stdafx.h"
 # include "MidiParser_FileParser_Mock.h"
-# include "..\MidiParser\FileCounter.h"
-# include "..\MidiParser\MidiStruct.h"
-# include "..\MidiParser\MidiError.h"
+# include "MidiParser\FileCounter.h"
+# include "MidiParser\MidiStruct.h"
+# include "MidiError.h"
 
 using namespace std;
 using gTest::FileParser_Mock;

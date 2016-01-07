@@ -105,13 +105,13 @@
     <ClInclude Include="SystemEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
-    <ClInclude Include="MidiParser_Facade.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MidiStruct.h">
       <Filter>Header Files\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="MidiError.h">
+    <ClInclude Include="..\MidiError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MidiParser_Facade.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

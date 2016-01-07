@@ -1,5 +1,5 @@
 # pragma once
-# include "..\MidiParser\IMidiParser.h"
+# include "MidiParser\IMidiParser.h"
 
 namespace MidiStruct
 {

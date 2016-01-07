@@ -44,8 +44,8 @@
 						5	2 + 3 + 4 + 5 = 14 = metaData
 *********************************************************/
 
-# include "..\MidiParser\MetaEvent_Tempo.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiParser\MetaEvent_Tempo.h"
+# include "MidiParser\MidiStruct.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent_Tempo, 44);

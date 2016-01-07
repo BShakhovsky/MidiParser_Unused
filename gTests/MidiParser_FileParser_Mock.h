@@ -1,5 +1,5 @@
 # pragma once
-# include "..\MidiParser\IFileParser.h"
+# include "MidiParser\IFileParser.h"
 
 class FileCounter;
 

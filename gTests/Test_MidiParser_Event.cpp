@@ -23,7 +23,7 @@
 239	EF	Midi event
 *************************/
 
-# include "..\MidiParser\Event.h"
+# include "MidiParser\Event.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(Event, 23);

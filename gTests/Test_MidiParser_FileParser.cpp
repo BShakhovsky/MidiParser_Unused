@@ -1,7 +1,7 @@
 # include "stdafx.h"
 # include "CurrentFileName.h"
-# include "..\MidiParser\FileParser.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiParser\FileParser.h"
+# include "MidiParser\MidiStruct.h"
 
 using namespace testing;
 

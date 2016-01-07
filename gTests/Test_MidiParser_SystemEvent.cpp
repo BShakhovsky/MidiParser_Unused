@@ -11,8 +11,8 @@
 			7	seven lines to skip:
 ***********************************/
 
-# include "..\MidiParser\SystemEvent.h"
-# include "..\MidiParser\FileParser.h"
+# include "MidiParser\SystemEvent.h"
+# include "MidiParser\FileParser.h"
 # include "MidiParser_EventCommon.h"
 
 /********************************************
@@ -21,7 +21,7 @@
 			5	one + five = 6 lines to skip:
 ********************************************/
 
-# include "..\MidiParser\MidiError.h"
+# include "MidiError.h"
 using testing::FLAGS_gtest_break_on_failure;
 
 /*************************************************

@@ -55,7 +55,7 @@
 					10 = Ok as well
 *************************************************/
 
-# include "..\MidiParser\MetaEvent_Skip.h"
+# include "MidiParser\MetaEvent_Skip.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent_Skip, 65);

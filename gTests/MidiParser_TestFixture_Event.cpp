@@ -1,7 +1,7 @@
 # include "stdafx.h"
 # include "MidiParser_TestFixture_Event.h"
-# include "..\MidiParser\Event.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiParser\Event.h"
+# include "MidiParser\MidiStruct.h"
 # include "MidiParser_FileParser_Mock.h"
 
 using std::make_shared;

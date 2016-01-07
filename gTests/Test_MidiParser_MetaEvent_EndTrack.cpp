@@ -29,7 +29,7 @@
 				-256 = zero byte = Ok
 *******************************************/
 
-# include "..\MidiParser\MetaEvent_EndTrack.h"
+# include "MidiParser\MetaEvent_EndTrack.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent_EndTrack, 4);

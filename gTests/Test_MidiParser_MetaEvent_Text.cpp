@@ -64,7 +64,7 @@
 			7	Seven + 6 + 4 + 15 = 32 lines:
 **********************************************/
 
-# include "..\MidiParser\MetaEvent_Text.h"
+# include "MidiParser\MetaEvent_Text.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent_Text, 86);

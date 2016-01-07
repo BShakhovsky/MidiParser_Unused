@@ -1,7 +1,7 @@
 # include "stdafx.h"
-# include "..\MidiParser\MidiChunksReader.h"
-# include "..\MidiParser\MidiStruct.h"
-# include "..\MidiParser\MidiError.h"
+# include "MidiParser\MidiChunksReader.h"
+# include "MidiParser\MidiStruct.h"
+# include "MidiError.h"
 # include "MidiParser_Mock.h"
 # include "CurrentFileName.h"
 

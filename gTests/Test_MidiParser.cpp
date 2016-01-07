@@ -1,8 +1,8 @@
 # include "stdafx.h"
-# include "..\MidiParser\MidiParser.h"
-# include "..\MidiParser\MidiStruct.h"
-# include "..\MidiParser\FileParser.h"
-# include "..\MidiParser\MidiError.h"
+# include "MidiParser\MidiParser.h"
+# include "MidiParser\MidiStruct.h"
+# include "MidiParser\FileParser.h"
+# include "MidiError.h"
 # include "CurrentFileName.h"
 
 using namespace testing;

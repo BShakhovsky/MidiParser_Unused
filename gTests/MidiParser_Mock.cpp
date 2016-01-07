@@ -1,6 +1,6 @@
 # include "stdafx.h"
 # include "MidiParser_Mock.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiParser\MidiStruct.h"
 
 using std::vector;
 using namespace MidiStruct;

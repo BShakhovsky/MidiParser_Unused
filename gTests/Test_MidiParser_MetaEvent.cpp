@@ -65,8 +65,8 @@
 -1	FF
 	128	WRONG META TYPE
 ******************************************/
-# include "..\MidiParser\MidiError.h"
-# include "..\MidiParser\MetaEvent.h"
+# include "MidiError.h"
+# include "MidiParser\MetaEvent.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent, 66);

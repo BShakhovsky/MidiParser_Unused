@@ -1,5 +1,5 @@
 # include "stdafx.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiParser\MidiStruct.h"
 
 using MidiStruct::ChunkType;
 

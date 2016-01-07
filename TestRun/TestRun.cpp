@@ -1,5 +1,5 @@
 # include "stdafx.h"
-# include "..\MidiParser\MidiParser_Facade.h"
+# include "MidiParser_Facade.h"
 
 int main()
 {

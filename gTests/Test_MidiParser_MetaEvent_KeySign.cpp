@@ -57,8 +57,8 @@
 		2 = Ok
 			7 = seven dieses
 *******************************************/
-# include "..\MidiParser\MidiError.h"
-# include "..\MidiParser\MetaEvent_KeySign.h"
+# include "MidiError.h"
+# include "MidiParser\MetaEvent_KeySign.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MetaEvent_KeySign, 59);

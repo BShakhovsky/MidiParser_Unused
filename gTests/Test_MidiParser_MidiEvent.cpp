@@ -40,9 +40,9 @@
 1 > 0 ==> running status = new bottom value
 				4		New top value
 ****************************************************************/
-# include "..\MidiParser\MidiError.h"
-# include "..\MidiParser\MidiEvent.h"
-# include "..\MidiParser\MidiStruct.h"
+# include "MidiError.h"
+# include "MidiParser\MidiEvent.h"
+# include "MidiParser\MidiStruct.h"
 # include "MidiParser_EventCommon.h"
 
 FIXTURE(MidiEvent, 47);
