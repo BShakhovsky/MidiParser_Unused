@@ -23,10 +23,7 @@ public:
 	const MidiStruct::TrackChunk ReadTrackChunk();
 					// skips alien chunks (non "MTrk"), pImpl_::ReadEvent() may throw
 
-	const std::string& GetLog() const
-	{
-		return log_;
-	}
+	std::string GetLogAndFlush();
 	const std::string& GetTrackName() const
 	{
 		return trackName_;

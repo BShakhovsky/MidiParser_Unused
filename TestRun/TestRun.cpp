@@ -8,7 +8,7 @@ int main()
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
 	auto timeStart(clock());
-	const MidiParser_Facade midi("../../Test.mid");
+	const MidiParser_Facade midi("../../../Test.mid");
 	auto runDuration(clock() - timeStart);
 
 	timeStart = clock();
@@ -31,4 +31,6 @@ int main()
 	printf("\nRun time = %f seconds\tPrint time = %f seconds\nTotal time = %f seconds\n",
 		static_cast<float>(runDuration) / CLOCKS_PER_SEC, static_cast<float>(printDuration) / CLOCKS_PER_SEC,
 		static_cast<float>(runDuration + printDuration) / CLOCKS_PER_SEC);
+
+	printf("\n\n%s", midi.GetLog().c_str());
 }

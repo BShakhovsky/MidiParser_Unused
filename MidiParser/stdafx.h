@@ -23,8 +23,10 @@
 //# include "gTests\stdafx.h"
 # ifdef ADD_FAILURE
 #	define WARNING(MESSG) { ADD_FAILURE()				<< MESSG;				system("Pause"); }
-# else
+# elif defined _DEBUG
 #	define WARNING(MESSG) { std::cerr << "\nWARNING: "	<< MESSG << std::endl;	system("Pause"); }
+# else
+#	define WARNING(MESSG) { std::cerr << "\nWARNING: "	<< MESSG << std::endl; }
 # endif
 
 # pragma warning(disable:4514)

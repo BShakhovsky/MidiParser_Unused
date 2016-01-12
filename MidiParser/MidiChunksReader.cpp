@@ -23,6 +23,13 @@ MidiChunksReader::MidiChunksReader(unique_ptr<IMidiParser> mock) :	// for unit t
 MidiChunksReader::~MidiChunksReader() {}
 #pragma warning(pop)
 
+string MidiChunksReader::GetLogAndFlush()
+{
+	const auto result(log_);
+	log_.clear();
+	return std::move(result);
+}
+
 void CheckHeaderIntro(const ChunkIntro intro)
 {
 	if (intro.type != ChunkIntro::HEADER)	throw MidiError("CORRUPTED MIDI FILE HEADER");
@@ -46,13 +53,11 @@ uint32_t MidiChunksReader::SMPTE_TicksPerSec(const uint32_t division, const bool
 
 const HeaderChunk MidiChunksReader::ReadHeaderChunk()
 {
-	using boost::format;
-
 	HeaderChunk result;
 	result.intro = pImpl_->ReadChunkIntro();
 	CheckHeaderIntro(result.intro);
 	result.data = pImpl_->ReadHeaderData();
-	log_ += pImpl_->GetLogAndFlush();
+	log_ = pImpl_->GetLogAndFlush();
 
 	if (result.data.format == 0)
 	{
@@ -84,7 +89,7 @@ const TrackChunk MidiChunksReader::ReadTrackChunk()
 	else
 		result.trackEvent =	pImpl_->ReadTrackEvents(result.intro.length);
 
-	log_ += pImpl_->GetLogAndFlush();
+	log_ = pImpl_->GetLogAndFlush();
 	trackName_ = pImpl_->GetTrackNameAndFlush();
 	return result;
 }

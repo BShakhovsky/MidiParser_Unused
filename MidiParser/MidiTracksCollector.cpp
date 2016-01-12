@@ -29,11 +29,13 @@ void MidiTracksCollector::ReadMidiFile()
 	else
 	headerData_ = make_shared<HeaderData>(midiFile_->ReadHeaderChunk().data);
 	ReadTracks();
-	log_ += midiFile_->GetLog();
+	log_ += midiFile_->GetLogAndFlush();
 }
 
 void MidiTracksCollector::ReadTracks()
 {
+	using boost::format;
+
 	tracks_.reserve(headerData_->tracks);
 	trackNames_.reserve(headerData_->tracks);
 	for (uint16_t i(0); i < headerData_->tracks; ++i)
@@ -41,5 +43,8 @@ void MidiTracksCollector::ReadTracks()
 		const auto result(midiFile_->ReadTrackChunk().trackEvent);
 		if (!result.empty()) tracks_.push_back(result);	// may throw
 		trackNames_.push_back(midiFile_->GetTrackName());
+
+		const auto log(midiFile_->GetLogAndFlush());
+		if (!log.empty()) log_ += (format{ "Track %1%: " } % (i + 1)).str() + log;
 	}
 }
