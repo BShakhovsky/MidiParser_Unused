@@ -45,6 +45,6 @@ void MidiTracksCollector::ReadTracks()
 		trackNames_.push_back(midiFile_->GetTrackName());
 
 		const auto log(midiFile_->GetLogAndFlush());
-		if (!log.empty()) log_ += (format{ "Track %1%: " } % (i + 1)).str() + log;
+		if (!log.empty()) log_ += (format{ "Track %1%: " } % i).str() + log;
 	}
 }
