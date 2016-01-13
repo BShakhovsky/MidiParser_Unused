@@ -46,8 +46,11 @@ public:
 		return trackNames_;
 	}
 private:
+	void ProgressMicroseconds();
+	void ReadEvent();
 	bool EndOfTracks();
-
-	uint32_t GetTempo() const;
 	MidiStruct::TrackEvent GetEvent() const;
+
+	double DeltaToMicrosec(double, uint32_t) const;
+	double MicrosecToDelta(double, uint32_t) const;
 };
