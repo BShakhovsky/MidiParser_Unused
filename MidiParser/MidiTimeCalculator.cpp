@@ -86,9 +86,9 @@ void MidiTimeCalculator::ProgressMicroseconds()
 			&& microSeconds_ + realDelta > tempo->first;)
 		{
 			const auto newMicroSec(tempo->first);
-			deltaTime -= MicrosecToDelta(newMicroSec - microSeconds_, --tempo->second);
+			deltaTime -= MicrosecToDelta(newMicroSec - microSeconds_, (--tempo)->second);
 			microSeconds_ = newMicroSec;
-			realDelta = DeltaToMicrosec(deltaTime, ++tempo->second);
+			realDelta = DeltaToMicrosec(deltaTime, (++tempo)->second);
 		}
 		microSeconds_ += realDelta;
 	}
