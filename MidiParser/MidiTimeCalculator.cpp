@@ -71,12 +71,16 @@ void MidiTimeCalculator::CalcDeltaTimes()
 void MidiTimeCalculator::ProgressMicroseconds()
 {
 	if (tempoSettings_.empty())
-		assert("DELTA TIME STARTED BEFORE TEMPO IS SET" && !GetEvent().deltaTime);
+	{
+		if (GetEvent().deltaTime)	// In this case default tempo assumed 120 BPM:
+			tempoSettings_.insert(make_pair(0, TrackEvent::microSec * TrackEvent::minute / 120));
+									// Event meta data = 1'000'000 * 60 / 120 = 500'000
+	}
 	else
 	{
 		assert("TEMPO SETTING MUST BEGIN FROM ZERO TIME" && !tempoSettings_.cbegin()->first);
 		auto tempo(--tempoSettings_.upper_bound(microSeconds_));
-		
+
 		auto realDelta(DeltaToMicrosec(GetEvent().deltaTime, tempo->second));
 		for (double deltaTime(GetEvent().deltaTime); ++tempo != tempoSettings_.cend()
 			&& microSeconds_ + realDelta > tempo->first;)
