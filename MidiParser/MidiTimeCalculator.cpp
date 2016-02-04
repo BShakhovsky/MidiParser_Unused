@@ -12,6 +12,7 @@ MidiTimeCalculator::MidiTimeCalculator() :
 	tempoDivision_(0ui16),
 	microSeconds_(0.0l),
 	tempoSettings_(),
+	globalTempoSettings_(),
 
 	tracks_(),
 	milliSeconds_(),
@@ -113,7 +114,7 @@ void MidiTimeCalculator::ReadEvent()
 			(TrackEvent::microSec * TrackEvent::minute / GetEvent().eventChunk.metaData)).str();
 	}
 	else if (0x0'90 == (GetEvent().eventChunk.status & 0x0'F0)	// 0xF0 is negative ==> 0x0F0 is positive
-					&& GetEvent().eventChunk.velocity)		// if velocity = 0 ==> "note-off" event
+					&& GetEvent().eventChunk.velocity)			// if velocity = 0 ==> "note-off" event
 	{
 		milliSeconds_.back().emplace_back(static_cast<unsigned>(microSeconds_ / 1'000));
 		notes_.back().push_back(GetEvent().eventChunk.note);
@@ -132,6 +133,19 @@ bool MidiTimeCalculator::EndOfTracks()
 			microSeconds_ = NULL;
 			milliSeconds_.emplace_back(vector<unsigned>());
 			notes_.emplace_back(vector<int16_t>());
+
+			if (currentTrack_ == 1)
+			{
+				assert("Global tempo map has not been initialized correctly"
+					&& globalTempoSettings_.empty());
+				globalTempoSettings_ = tempoSettings_;
+			}
+			else
+			{
+				assert("First track does not contain tempo information, all times will be zero"
+					&& !globalTempoSettings_.empty());
+				tempoSettings_ = globalTempoSettings_;
+			}
 		}
 	}
 	return result;
