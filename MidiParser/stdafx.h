@@ -20,7 +20,7 @@
 #	include <boost\format.hpp>
 # pragma warning(pop)
 
-//# include "gTests\stdafx.h"
+# include "gTests\stdafx.h"
 # ifdef ADD_FAILURE
 #	define WARNING(MESSG) { ADD_FAILURE()				<< MESSG;				system("Pause"); }
 # elif defined _DEBUG
